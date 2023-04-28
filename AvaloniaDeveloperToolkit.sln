@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33620.401
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Build", ".Build", "{E3C9410A-6BBD-45D1-AC5D-2DF1B8B5A61F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Build\Directory.build.common.props = Build\Directory.build.common.props
+		Build\Directory.build.common.targets = Build\Directory.build.common.targets
+		Directory.Build.props = Directory.Build.props
+		Directory.build.targets = Directory.build.targets
+		Directory.buildcpp.props = Directory.buildcpp.props
+		Directory.Packages.props = Directory.Packages.props
+		Build\Directory.Packages.targets = Build\Directory.Packages.targets
+		global.json = global.json
+		LICENSE = LICENSE
+		Nuget.bat = Nuget.bat
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{91C897F2-CA66-4F00-9EFC-CA1834363460}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Sample", "Source\Avalonia.Sample\Avalonia.Sample\Avalonia.Sample.csproj", "{474CF330-D2C7-4CEB-8098-F409715A8493}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Sample.Android", "Source\Avalonia.Sample\Avalonia.Sample.Android\Avalonia.Sample.Android.csproj", "{31139A1C-6703-412A-BF45-7A5ED3C40C29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Sample.Desktop", "Source\Avalonia.Sample\Avalonia.Sample.Desktop\Avalonia.Sample.Desktop.csproj", "{566F775C-98DE-42EC-A94B-6179FDF6BC2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Sample.iOS", "Source\Avalonia.Sample\Avalonia.Sample.iOS\Avalonia.Sample.iOS.csproj", "{B3A8C1AC-2C84-4E4A-9873-96DC162CAC60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Sample.Web", "Source\Avalonia.Sample\Avalonia.Sample.Web\Avalonia.Sample.Web.csproj", "{F6E72A78-88FA-48DB-9FF0-AC74C977EDC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaPropertySourceGenerator", "Source\AvaloniaPropertySourceGenerator\AvaloniaPropertySourceGenerator.csproj", "{820A02B6-E082-4AD8-B330-7F8D2C7C66E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{474CF330-D2C7-4CEB-8098-F409715A8493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{474CF330-D2C7-4CEB-8098-F409715A8493}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{474CF330-D2C7-4CEB-8098-F409715A8493}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{474CF330-D2C7-4CEB-8098-F409715A8493}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31139A1C-6703-412A-BF45-7A5ED3C40C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31139A1C-6703-412A-BF45-7A5ED3C40C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31139A1C-6703-412A-BF45-7A5ED3C40C29}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{31139A1C-6703-412A-BF45-7A5ED3C40C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31139A1C-6703-412A-BF45-7A5ED3C40C29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31139A1C-6703-412A-BF45-7A5ED3C40C29}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{566F775C-98DE-42EC-A94B-6179FDF6BC2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{566F775C-98DE-42EC-A94B-6179FDF6BC2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{566F775C-98DE-42EC-A94B-6179FDF6BC2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{566F775C-98DE-42EC-A94B-6179FDF6BC2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A8C1AC-2C84-4E4A-9873-96DC162CAC60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A8C1AC-2C84-4E4A-9873-96DC162CAC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A8C1AC-2C84-4E4A-9873-96DC162CAC60}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B3A8C1AC-2C84-4E4A-9873-96DC162CAC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A8C1AC-2C84-4E4A-9873-96DC162CAC60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A8C1AC-2C84-4E4A-9873-96DC162CAC60}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F6E72A78-88FA-48DB-9FF0-AC74C977EDC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E72A78-88FA-48DB-9FF0-AC74C977EDC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E72A78-88FA-48DB-9FF0-AC74C977EDC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E72A78-88FA-48DB-9FF0-AC74C977EDC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{820A02B6-E082-4AD8-B330-7F8D2C7C66E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820A02B6-E082-4AD8-B330-7F8D2C7C66E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820A02B6-E082-4AD8-B330-7F8D2C7C66E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820A02B6-E082-4AD8-B330-7F8D2C7C66E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{474CF330-D2C7-4CEB-8098-F409715A8493} = {91C897F2-CA66-4F00-9EFC-CA1834363460}
+		{31139A1C-6703-412A-BF45-7A5ED3C40C29} = {91C897F2-CA66-4F00-9EFC-CA1834363460}
+		{566F775C-98DE-42EC-A94B-6179FDF6BC2B} = {91C897F2-CA66-4F00-9EFC-CA1834363460}
+		{B3A8C1AC-2C84-4E4A-9873-96DC162CAC60} = {91C897F2-CA66-4F00-9EFC-CA1834363460}
+		{F6E72A78-88FA-48DB-9FF0-AC74C977EDC1} = {91C897F2-CA66-4F00-9EFC-CA1834363460}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9B3B5F7-C96A-4EF1-9CCA-2DC65EEB0356}
+	EndGlobalSection
+EndGlobal

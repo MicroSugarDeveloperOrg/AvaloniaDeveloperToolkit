@@ -1,0 +1,37 @@
+﻿<Project>
+	<PropertyGroup>
+		<!--Package-->
+		<DeveloperToolkitVersion>0.1.0-preview-nigtly1.1</DeveloperToolkitVersion>
+		<DeveloperToolkitPackageOutputPath>$(RepositoryDirectory)nuget\</DeveloperToolkitPackageOutputPath>
+		<VersionPrefix>1.0.0-avalonia11p6-preview1</VersionPrefix>
+		<Authors>AvaloniaDeveloper</Authors>
+		<Company>AvaloniaDeveloperOrg</Company>
+		<Description>This repository is a toolkit for avalonia.</Description>
+		<PackageTags>toolkits for avalonia .</PackageTags>
+		<RepositoryUrl>https://github.com/AvaloniaDeveloperOrg/AvaloniaDeveloperToolkit</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/AvaloniaDeveloperOrg/AvaloniaDeveloperToolkit</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>toolkit@avalonia-logo.png</PackageIcon>
+		<Version>$(DeveloperToolkitVersion)</Version>
+		<PackageOutputPath>$(DeveloperToolkitPackageOutputPath)</PackageOutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\Packages\toolkit@avalonia-logo.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+	
+</Project>
