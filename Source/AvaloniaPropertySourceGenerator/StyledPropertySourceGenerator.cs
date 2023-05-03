@@ -36,7 +36,7 @@ public class StyledPropertySourceGenerator : IIncrementalGenerator
         {
 
 
-
+            Debugger.Launch();
         });
 
     }
