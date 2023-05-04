@@ -17,8 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AvaloniaPropertySourceGenerator\AvaloniaPropertySourceGenerator.csproj"  
+    <ProjectReference Include="..\..\Avalonia.SourceGenerators\Avalonia.SourceGenerators.csproj" 
 					  OutputItemType="Analyzer"
                       ReferenceOutputAssembly="true" />
   </ItemGroup>
 </Project>
+

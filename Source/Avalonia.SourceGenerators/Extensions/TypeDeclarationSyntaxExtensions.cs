@@ -16,6 +16,7 @@ internal static class TypeDeclarationSyntaxExtensions
                 return true;
         }
 
+
         return false;
     }
 
@@ -24,7 +25,7 @@ internal static class TypeDeclarationSyntaxExtensions
         if (typeDeclarationSyntax.BaseList is { Types.Count: > 0 })
             return true;
 
-        foreach (SyntaxToken modifier in typeDeclarationSyntax.Modifiers)
+        foreach (var modifier in typeDeclarationSyntax.Modifiers)
         {
             if (modifier.IsKind(SyntaxKind.PartialKeyword))
                 return true;

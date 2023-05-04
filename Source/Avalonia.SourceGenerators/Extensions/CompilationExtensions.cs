@@ -25,6 +25,46 @@ internal static class CompilationExtensions
         return true;
     }
 
+    public static bool IsNullabilitySupported(this Compilation compilation)
+    {
+        return compilation.HasAccessibleTypeWithMetadataName("System.Diagnostics.CodeAnalysis.NotNullAttribute") &&
+               compilation.HasAccessibleTypeWithMetadataName("System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute");
+    }
+
+    public static bool HasAccessibleTypeWithMetadataName(this Compilation compilation, string fullyQualifiedMetadataName)
+    {
+        INamedTypeSymbol? type = compilation.GetTypeByMetadataName(fullyQualifiedMetadataName);
+
+        if (type is not null)
+            return type.CanBeAccessedFrom(compilation.Assembly);
+
+        type ??= compilation.Assembly.GetTypeByMetadataName(fullyQualifiedMetadataName);
+
+        if (type is not null)
+            return type.CanBeAccessedFrom(compilation.Assembly);
+
+        foreach (IModuleSymbol module in compilation.Assembly.Modules)
+        {
+            foreach (IAssemblySymbol referencedAssembly in module.ReferencedAssemblySymbols)
+            {
+                if (referencedAssembly.GetTypeByMetadataName(fullyQualifiedMetadataName) is not INamedTypeSymbol currentType)
+                    continue;
+
+                switch (currentType.GetEffectiveAccessibility())
+                {
+                    case Accessibility.Public:
+                    case Accessibility.Internal when referencedAssembly.GivesAccessTo(compilation.Assembly):
+                        return true;
+                    default:
+                        continue;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
     //public static bool HasAccessibleTypeWithMetadataName(this Compilation compilation, string fullyQualifiedMetadataName)
     //{
     //    // Try to get the unique type with this name
