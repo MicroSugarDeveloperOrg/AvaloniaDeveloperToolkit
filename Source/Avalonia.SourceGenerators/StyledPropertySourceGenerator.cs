@@ -18,7 +18,7 @@ internal class StyledPropertySourceGenerator : IIncrementalGenerator
     {
         //Debugger.Launch();
         var containerProvider = context.SyntaxProvider.ForAttributeWithMetadataName(typeof(StyledPropertyAttribute).FullName,
-            (node, token) => node is ClassDeclarationSyntax classDeclarationSyntax && classDeclarationSyntax.HasOrPotentiallyHasAttributes() && classDeclarationSyntax.HasOrPotentiallyHasBaseTypes(),
+            (node, token) => node is ClassDeclarationSyntax classDeclarationSyntax && classDeclarationSyntax.HasOrPotentiallyHasAttributes() && classDeclarationSyntax.HasOrPotentiallyHasBaseTypes() && classDeclarationSyntax.IsPartialClass(),
             (context, token) =>
             {
                 //Debugger.Launch();
@@ -35,6 +35,7 @@ internal class StyledPropertySourceGenerator : IIncrementalGenerator
                     return default;
 
                 //Debugger.Launch();
+
                 SyntaxHierarchy syntax = SyntaxHierarchy.From(typeSymbol);
                 SyntaxMetadata metadata = new(typeSymbol.IsSealed, context.SemanticModel.Compilation.IsNullabilitySupported());
 

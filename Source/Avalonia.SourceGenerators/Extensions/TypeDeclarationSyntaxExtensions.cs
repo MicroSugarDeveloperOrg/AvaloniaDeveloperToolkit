@@ -34,4 +34,15 @@ internal static class TypeDeclarationSyntaxExtensions
         return false;
     }
 
+    public static bool IsPartialClass(this ClassDeclarationSyntax typeDeclarationSyntax)
+    {
+        foreach (var modifier in typeDeclarationSyntax.Modifiers)
+        {
+            if (modifier.IsKind(SyntaxKind.PartialKeyword))
+                return true;
+        }
+
+        return false;
+    }
+
 }
