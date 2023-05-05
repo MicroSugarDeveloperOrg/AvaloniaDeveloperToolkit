@@ -29,7 +29,7 @@ internal class StyledPropertySourceGenerator : IIncrementalGenerator
                     return default;
 
                 //Debugger.Launch();
-                //var node = context.TargetNode;
+                var node = context.TargetNode;
 
                 if (!typeSymbol.HasAccessibleBaseTypeWithMetadataName("AvaloniaObject"))
                     return default;
@@ -38,15 +38,15 @@ internal class StyledPropertySourceGenerator : IIncrementalGenerator
                 SyntaxHierarchy syntax = SyntaxHierarchy.From(typeSymbol);
                 SyntaxMetadata metadata = new(typeSymbol.IsSealed, context.SemanticModel.Compilation.IsNullabilitySupported());
 
-                return new SyntaxContainer<(SyntaxHierarchy syntax, SyntaxMetadata metadata)>((syntax, metadata));
+                return new SyntaxContainer<(SyntaxHierarchy syntax, SyntaxMetadata metadata,SyntaxNode? node)>((syntax, metadata, node));
             }).Where(item => item is not null);
 
         context.RegisterSourceOutput(containerProvider, (context, container) =>
         {
             if (container is null)
-                return;
+                return; 
 
-           //CompilationUnitSyntax compilationUnit = container.Value.syntax.CompilationUnitSyntax(updatedMemberDeclarations);
+            //CompilationUnitSyntax compilationUnit = container.Value.syntax.CompilationUnitSyntax(updatedMemberDeclarations);
 
             context.AddSource($"{container.Value.syntax.FilenameHint}.g.cs", "");
             //Debugger.Launch();
