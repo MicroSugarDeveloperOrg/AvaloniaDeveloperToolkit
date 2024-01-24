@@ -15,6 +15,7 @@ public partial class AppDelegate : AvaloniaAppDelegate<App>
 {
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
-        return builder.UseReactiveUI();
+        return base.CustomizeAppBuilder(builder)
+            .UseReactiveUI();
     }
 }
