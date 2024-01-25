@@ -26,7 +26,9 @@ internal sealed class ObjectPool<T>
     /// </summary>
     /// <param name="factory">The input factory to produce <typeparamref name="T"/> items.</param>
     public ObjectPool(Func<T> factory)
+#pragma warning disable RS1035 // Do not use APIs banned for analyzers
         : this(factory, Environment.ProcessorCount * 2)
+#pragma warning restore RS1035 // Do not use APIs banned for analyzers
     {
     }
 

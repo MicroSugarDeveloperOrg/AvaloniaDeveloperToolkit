@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>737f7c0a-e6f9-4c91-a703-4281b048a1a4</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Prism.SourceGenerators.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\BindableObjectAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\BindablePropertyAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\BindableCommandAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CodeFixers\ClassUsingAttributeInsteadOfInheritanceCodeFixer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\Analyzers\AutoPropertyWithFieldTargetedBindablePropertyAttributeAnalyzer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\Analyzers\ClassUsingAttributeInsteadOfInheritanceAnalyzer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\DiagnosticDescriptors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\SuppressionDescriptors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\Suppressors\BindablePropertyAttributeWithPropertyTargetDiagnosticSuppressor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\GeneratorPostInitializationContextExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\INamedTypeSymbolExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ITypeSymbolExtensions.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\BindableCommandAttribute.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\BindableObjectAttribute.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\BindablePropertyAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttributeDataExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CompilationExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ISymbolExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\BindableCommandSourceGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\BindableObjectSourceGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\BindablePropertySourceGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\BindableObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Prism.Mvvm.SourceGenerators.props" />
+  </ItemGroup>
+</Project>
