@@ -17,14 +17,14 @@ internal static class DiagnosticDescriptors
                "reduce the binary size of the application (the attributes are only meant to support cases where the annotated types are already inheriting from a different type).",
            helpLinkUri: "");
 
-    public static readonly DiagnosticDescriptor ObservablePropertyNameCollisionError = new(
+    public static readonly DiagnosticDescriptor BindablePropertyNameCollisionError = new(
            id: "PRISMSG0014",
            title: "Name collision for generated property",
            messageFormat: "The field {0}.{1} cannot be used to generate an observable property, as its name would collide with the field name (instance fields should use the \"lowerCamel\", \"_lowerCamel\" or \"m_lowerCamel\" pattern)",
            category: typeof(BindablePropertySourceGenerator).FullName,
            defaultSeverity: DiagnosticSeverity.Error,
            isEnabledByDefault: true,
-           description: "The name of fields annotated with [ObservableProperty] should use \"lowerCamel\", \"_lowerCamel\" or \"m_lowerCamel\" pattern to avoid collisions with the generated properties.",
+           description: "The name of fields annotated with [BindableProperty] should use \"lowerCamel\", \"_lowerCamel\" or \"m_lowerCamel\" pattern to avoid collisions with the generated properties.",
            helpLinkUri: "");
 
     public static readonly DiagnosticDescriptor AutoPropertyBackingFieldBindableProperty = new(

@@ -2,6 +2,7 @@
 using Prism.SourceGenerators.Generators;
 using System.Collections.Generic;
 using System.Linq;
+using static Prism.SourceGenerators.Helpers.CodeHelpers;
 
 namespace Prism.SourceGenerators.Diagnostics.Analyzers;
 
@@ -14,7 +15,7 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceAnalyzer : Diagnostic
 
     private static readonly ImmutableDictionary<string, string> GeneratorAttributeNamesToFullyQualifiedNamesMap = ImmutableDictionary.CreateRange(new[]
     {
-        new KeyValuePair<string, string>("BindableObjectAttribute", "Prism.Mvvm.BindableObjectAttribute"),
+        new KeyValuePair<string, string>("BindableObjectAttribute", "Prism.Mvvm.BindableObjectAttribute"), 
     });
 
     private static readonly ImmutableDictionary<string, DiagnosticDescriptor> GeneratorAttributeNamesToDiagnosticsMap = ImmutableDictionary.CreateRange(new[]
@@ -36,19 +37,30 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceAnalyzer : Diagnostic
 
             context.RegisterSymbolAction(context =>
             {
-                if (context.Symbol is not INamedTypeSymbol { TypeKind: TypeKind.Class, IsRecord: false, IsStatic: false, IsImplicitlyDeclared: false } classSymbol)
+                if (context.Symbol is not INamedTypeSymbol { TypeKind: TypeKind.Class, IsRecord: false, IsStatic: false, IsImplicitlyDeclared: false, BaseType.SpecialType: SpecialType.System_Object } classSymbol)
                     return;
 
                 var baseType = classSymbol.BaseType;
                 if (baseType is not null)
                 {
-                    //if (baseType.ToDisplayString() != BindableObjectSourceGenerator.__bindableObject__)
-                    //{
-                    //    context.ReportDiagnostic(Diagnostic.Create(
-                    //        DiagnosticDescriptors.DuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError,
-                    //            context.Symbol.Locations.FirstOrDefault(), 
-                    //            context.Symbol));
-                    //}
+                    foreach (AttributeData attribute in context.Symbol.GetAttributes())
+                    {
+                        if (attribute.AttributeClass is { Name: string attributeName } attributeClass &&
+                            typeSymbols.TryGetValue(attributeName, out INamedTypeSymbol? attributeSymbol) &&
+                            SymbolEqualityComparer.Default.Equals(attributeClass, attributeSymbol))
+                        {
+                            if (baseType.ToDisplayString() != __BindableObject__ && baseType.ToDisplayString() != "object")
+                            {
+                                context.ReportDiagnostic(Diagnostic.Create(
+                                    DiagnosticDescriptors.DuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError,
+                                        context.Symbol.Locations.FirstOrDefault(),
+                                         ImmutableDictionary.Create<string, string?>()
+                                            .Add(TypeNameKey, classSymbol.Name)
+                                            .Add(AttributeTypeNameKey, attributeName),
+                                            context.Symbol));
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -68,8 +80,6 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceAnalyzer : Diagnostic
                         }
                     }
                 }
-
-
             }, SymbolKind.NamedType);
         });
     }

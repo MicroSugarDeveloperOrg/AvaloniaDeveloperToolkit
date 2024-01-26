@@ -11,4 +11,7 @@ namespace Avalonia.Sample.ViewModels;
 [ObservableObject]
 public partial class TestMvvm 
 {
+
+    //[ObservableProperty]
+    //public int Test;
 }

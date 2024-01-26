@@ -1,29 +1,22 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+﻿using Microsoft.CodeAnalysis.Text;
 using Prism.SourceGenerators.Diagnostics;
 using Prism.SourceGenerators.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static Prism.SourceGenerators.Helpers.CodeHelpers;
 
 namespace Prism.SourceGenerators.Generators;
 
 [Generator(LanguageNames.CSharp)]
 public class BindableObjectSourceGenerator : ISourceGenerator
 {
-    const string __bindableObjectAttributeEmbeddedResourceName__ = "BindableObjectAttribute";
-    const string __bindableObjectEmbeddedResourceName__ = "BindableObject";
-
-    public const string __bindableObjectAttribute__ = $"Prism.Mvvm.{__bindableObjectAttributeEmbeddedResourceName__}";
-    public const string __bindableObject__ = $"Prism.Mvvm.{__bindableObjectEmbeddedResourceName__}";
-
-
     void ISourceGenerator.Initialize(GeneratorInitializationContext context)
     {
         context.RegisterForPostInitialization(context =>
         {
-            context.CreateSourceCodeFromEmbeddedResource(__bindableObjectAttributeEmbeddedResourceName__);
-            context.CreateSourceCodeFromEmbeddedResource(__bindableObjectEmbeddedResourceName__);
+            context.CreateSourceCodeFromEmbeddedResource(__BindableObjectAttributeEmbeddedResourceName__);
+            context.CreateSourceCodeFromEmbeddedResource(__BindableObjectEmbeddedResourceName__);
         });
 
         context.RegisterForSyntaxNotifications(() => new SyntaxContextReceiver());
@@ -38,36 +31,41 @@ public class BindableObjectSourceGenerator : ISourceGenerator
         var map = syntaxContextReceiver.GetClasses();
         foreach (var mapClass in map)
         {
-            INamedTypeSymbol namedTypeSymbol = mapClass.Key;
-            ClassDeclarationSyntax classDeclarationSyntax = mapClass.Value;
+            INamedTypeSymbol namedTypeSymbol = mapClass;
 
             var baseType = namedTypeSymbol.BaseType;
             bool isBaseType = false;
+
             if (baseType is not null)
             {
-                if (baseType.ToDisplayString() != __bindableObject__ && baseType.ToDisplayString() != "object")
+                if (baseType.ToDisplayString() != __BindableObject__)
                 {
-                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.DuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError,
-                                             namedTypeSymbol.Locations.FirstOrDefault(),
-                                             namedTypeSymbol));
+                    if (baseType.ToDisplayString() != __object__)
+                    {
+                        context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.DuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError,
+                                            namedTypeSymbol.Locations.FirstOrDefault(),
+                                            namedTypeSymbol));
+                    }
                 }
                 else
                     isBaseType = true;
             }
 
-            var classCode = CreateClassCode(namedTypeSymbol, isBaseType);
+           
+            var classCode = BuildClassCode(namedTypeSymbol, isBaseType);
             if (string.IsNullOrWhiteSpace(classCode))
                 continue;
-
-            context.AddSource($"{namedTypeSymbol.Name}_bindableobject.g.cs", SourceText.From(classCode!, Encoding.UTF8));
+         
+            context.AddSource($"{namedTypeSymbol.Name}_{__BindableObjectEmbeddedResourceName__}.{__GeneratorCSharpFileExtension__}", SourceText.From(classCode!, Encoding.UTF8));
         }
 
+        map.Clear();
         syntaxContextReceiver.Clear();
     }
 
     class SyntaxContextReceiver : ISyntaxContextReceiver
     {
-        Dictionary<INamedTypeSymbol, ClassDeclarationSyntax> _mapClasses = [];
+        List<INamedTypeSymbol> _mapClasses = [];
 
         void ISyntaxContextReceiver.OnVisitSyntaxNode(GeneratorSyntaxContext context)
         {
@@ -92,7 +90,7 @@ public class BindableObjectSourceGenerator : ISourceGenerator
                     if (type is null)
                         continue;
 
-                    if (type.ToDisplayString() != __bindableObjectAttribute__)
+                    if (type.ToDisplayString() != __BindableObjectAttribute__)
                         continue;
 
                     isFlag = true;
@@ -109,11 +107,12 @@ public class BindableObjectSourceGenerator : ISourceGenerator
                 if (namedTypeSymbol is null)
                     return;
 
-                _mapClasses[namedTypeSymbol] = classDeclaration;
+                //Debugger.Launch();
+                _mapClasses.Add(namedTypeSymbol);
             }
         }
 
-        public Dictionary<INamedTypeSymbol, ClassDeclarationSyntax> GetClasses() => _mapClasses;
+        public ImmutableArray<INamedTypeSymbol> GetClasses() => _mapClasses.ToImmutableArray();
 
         public bool Clear()
         {
@@ -124,18 +123,18 @@ public class BindableObjectSourceGenerator : ISourceGenerator
 
     }
 
-    string? CreateClassCode(INamedTypeSymbol classSymbol, bool isBaseType)
+    string? BuildClassCode(INamedTypeSymbol classSymbol, bool isBaseType)
     {
         if (classSymbol is null)
             return default;
-    
+
         if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             return default;
 
         string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
-        string classDescription = isBaseType ? $"partial class {classSymbol.Name} " : $"partial class {classSymbol.Name} : {__bindableObject__} ";
+        string classDescription = isBaseType ? $"partial class {classSymbol.Name} " : $"partial class {classSymbol.Name} : {__BindableObject__} ";
 
-        string code =  $"""
+        string code = $"""
            namespace {namespaceName};
            {classDescription}
            {'{'}
