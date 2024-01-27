@@ -24,7 +24,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\Suppressors\BindablePropertyAttributeWithPropertyTargetDiagnosticSuppressor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GeneratorPostInitializationContextExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IFieldSymbolExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IMethodSymbolExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\INamedTypeSymbolExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IParameterSymbolExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ITypeSymbolExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CodeHelpers.cs" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\BindableCommandAttribute.cs" />

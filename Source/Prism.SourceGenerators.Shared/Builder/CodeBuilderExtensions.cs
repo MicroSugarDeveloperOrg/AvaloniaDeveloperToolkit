@@ -7,11 +7,18 @@ internal static class CodeBuilderExtensions
         return builder;
     }
 
-    public static CodeBuilder AppendUseSystemNameSpace(this CodeBuilder builder)
+    public static CodeBuilder AppendUsePropertySystemNameSpace(this CodeBuilder builder)
+    {
+        var bRet = builder.AppendUseNameSpace("System"); 
+        bRet = builder.AppendUseNameSpace("Prism.Mvvm");
+        return builder;
+    }
+
+    public static CodeBuilder AppendUseCommandSystemNameSpace(this CodeBuilder builder)
     {
         var bRet = builder.AppendUseNameSpace("System");
+        bRet = builder.AppendUseNameSpace("System.Windows.Input");
         bRet = builder.AppendUseNameSpace("Prism.Commands");
-        bRet = builder.AppendUseNameSpace("Prism.Mvvm");
         return builder;
     }
 

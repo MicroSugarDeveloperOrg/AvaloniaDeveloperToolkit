@@ -34,11 +34,10 @@ public class BindablePropertySourceGenerator : ISourceGenerator
         {
             INamedTypeSymbol classSymbol = mapField.Key;
 
-            //Debugger.Launch();
             using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.Name, classSymbol.ContainingNamespace.ToDisplayString());
-            builder.AppendUseSystemNameSpace();
+            builder.AppendUsePropertySystemNameSpace();
 
-            ImmutableArray<IFieldSymbol> fieldSymbols = mapField.Value.ToImmutableArray();
+            ImmutableArray<IFieldSymbol> fieldSymbols = mapField.Value;
 
             foreach (var fieldSymbol in fieldSymbols)
             {
@@ -50,11 +49,10 @@ public class BindablePropertySourceGenerator : ISourceGenerator
                                             classSymbol));
                     continue;
                 }
-                //Debugger.Launch();
+
                 builder.AppendProperty(fieldSymbol.Type.ToDisplayString(), fieldSymbol.Name, propertyName);
             }
 
-            //Debugger.Launch();
             context.AddSource($"{classSymbol.Name}_{__BindableProperty__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));
         }
 
@@ -101,7 +99,9 @@ public class BindablePropertySourceGenerator : ISourceGenerator
             foreach (var item in _mapFields)
                 map.Add(item.Key, item.Value.ToImmutableArray());
 
-            return map.ToImmutableDictionary(default);
+            var returnMap = map.ToImmutableDictionary(default);
+
+            return returnMap;
         }
 
         public bool Clear()

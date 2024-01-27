@@ -6,6 +6,11 @@ internal static class ISymbolExtensions
         return TryGetAttributeWithType(symbol, typeSymbol, out _);
     }
 
+    public static string GetFullyQualifiedName(this ISymbol symbol)
+    {
+        return symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+    }
+
     public static bool TryGetAttributeWithType(this ISymbol symbol, ITypeSymbol typeSymbol, [NotNullWhen(true)] out AttributeData? attributeData)
     {
         foreach (AttributeData attribute in symbol.GetAttributes())

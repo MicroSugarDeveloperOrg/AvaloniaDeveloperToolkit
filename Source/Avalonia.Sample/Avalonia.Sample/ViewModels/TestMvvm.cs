@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -14,4 +15,10 @@ public partial class TestMvvm
 
     //[ObservableProperty]
     //public int Test;
+
+    [RelayCommand()]
+    void Test(object obj)
+    {
+
+    }
 }

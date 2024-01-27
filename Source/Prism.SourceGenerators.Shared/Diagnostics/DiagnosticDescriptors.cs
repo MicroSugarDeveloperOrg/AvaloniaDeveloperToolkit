@@ -13,19 +13,50 @@ internal static class DiagnosticDescriptors
            defaultSeverity: DiagnosticSeverity.Warning,
            isEnabledByDefault: true,
            description:
-               "Classes with no base types should prefer inheriting from ObservableObject instead of using attributes to generate INotifyPropertyChanged code, as that will " +
+               "Classes with no base types should prefer inheriting from BindableObject instead of using attributes to generate INotifyPropertyChanged code, as that will " +
                "reduce the binary size of the application (the attributes are only meant to support cases where the annotated types are already inheriting from a different type).",
            helpLinkUri: "");
 
     public static readonly DiagnosticDescriptor BindablePropertyNameCollisionError = new(
            id: "PRISMSG0014",
            title: "Name collision for generated property",
-           messageFormat: "The field {0}.{1} cannot be used to generate an observable property, as its name would collide with the field name (instance fields should use the \"lowerCamel\", \"_lowerCamel\" or \"m_lowerCamel\" pattern)",
+           messageFormat: "The field {0}.{1} cannot be used to generate an bindable property, as its name would collide with the field name (instance fields should use the \"lowerCamel\", \"_lowerCamel\" or \"m_lowerCamel\" pattern)",
            category: typeof(BindablePropertySourceGenerator).FullName,
            defaultSeverity: DiagnosticSeverity.Error,
            isEnabledByDefault: true,
            description: "The name of fields annotated with [BindableProperty] should use \"lowerCamel\", \"_lowerCamel\" or \"m_lowerCamel\" pattern to avoid collisions with the generated properties.",
            helpLinkUri: "");
+
+    public static readonly DiagnosticDescriptor BindableCommandNameCollisionError = new(
+           id: "PRISMSG0015",
+           title: "Name collision for generated command",
+           messageFormat: "The command {0}.{1} cannot be used to generate an bindable command, as its name would collide with the method name (instance method should use only one argument and return value is void)",
+           category: typeof(BindableCommandSourceGenerator).FullName,
+           defaultSeverity: DiagnosticSeverity.Error,
+           isEnabledByDefault: true,
+           description: "The name of method annotated with [BindableCommand] should use only one argument and no return value.",
+           helpLinkUri: "");
+
+    public static readonly DiagnosticDescriptor InvalidBindableCommandMethodSignatureError = new(
+           id: "PRISMSG0007",
+           title: "Invalid BindableCommand method signature",
+           messageFormat: "The method {0}.{1} cannot be used to generate a command property, as its signature isn't compatible with any of the existing bindable command types",
+           category: typeof(BindableCommandSourceGenerator).FullName,
+           defaultSeverity: DiagnosticSeverity.Error,
+           isEnabledByDefault: true,
+           description: "Cannot apply [BindableCommand] to methods with a signature that doesn't match any of the existing relay command types.",
+           helpLinkUri: "");
+
+    public static readonly DiagnosticDescriptor InvalidCanExecuteMemberNameError = new(
+           id: "PRISMSG0009",
+           title: "Invalid DelegateCommand.CanExecute member name",
+           messageFormat: "The CanExecute name must refer to a valid member, but \"{0}\" has no matches in type {1}",
+           category: typeof(BindableCommandSourceGenerator).FullName,
+           defaultSeverity: DiagnosticSeverity.Error,
+           isEnabledByDefault: true,
+           description: "The CanExecute name in [DelegateCommand] must refer to a valid member in its parent type.",
+           helpLinkUri: "");
+
 
     public static readonly DiagnosticDescriptor AutoPropertyBackingFieldBindableProperty = new(
            id: "PRISMSG0040",

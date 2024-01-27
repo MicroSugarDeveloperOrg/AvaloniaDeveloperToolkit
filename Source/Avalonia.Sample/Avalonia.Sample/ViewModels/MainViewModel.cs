@@ -1,7 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Mvvm;
-using System.Configuration;
 using System.Windows.Input;
 
 namespace Avalonia.Sample.ViewModels;
@@ -20,21 +18,24 @@ public partial class MainViewModel
     //public string Title
     //{
     //    get => _title;
-    //    set => SetProperty(ref _title, value, (@old, @new) =>
+    //    set
     //    {
+    //        if (EqualityComparer<string>.Default.Equals(_title, value)) return;
+
+    //        var @old = _title;
+    //        var @new = value;
+
     //        TitleChanging(@old);
     //        TitleChanging(@old, @new);
-    //    }, (@old, @new) =>
-    //    {
+
+    //        RaisePropertyChanged();
+
+
     //        TitleChanged(@old, @new);
     //        TitleChanged(@new);
-    //    });
+    //    }
     //}
 
-    //partial void TitleChanging(string oldValue);
-    //partial void TitleChanging(string oldValue, string newValue);
-    //partial void TitleChanged(string oldValue, string newValue);
-    //partial void TitleChanged(string newValue);
 
 
 
@@ -45,7 +46,7 @@ public partial class MainViewModel
     [BindableCommand(nameof(CanTest))]
     void Test(object obj)
     {
-         
+
     }
 
     bool CanTest(object obj)

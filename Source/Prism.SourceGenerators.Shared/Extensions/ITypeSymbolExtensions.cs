@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Prism.SourceGenerators.Extensions;
 
-namespace Prism.SourceGenerators.Extensions;
 internal static class ITypeSymbolExtensions
 {
     public static bool HasFullyQualifiedMetadataName(this ITypeSymbol symbol, string name)

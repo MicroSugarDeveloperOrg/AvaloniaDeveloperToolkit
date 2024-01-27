@@ -17,7 +17,7 @@ internal class CodeBuilder : IDisposable
     List<string> _namespaces = [];
     List<string> _interfaceNames = [];
     Dictionary<string, (string type, string field)> _mapPropertyNames = [];
-    Dictionary<string, (string argType, string? can)> _mapMethodNames = [];
+    Dictionary<string, (string? argType, string? can)> _mapMethodNames = [];
 
     public static CodeBuilder CreateBuilder(string className, string nameSpace) => new CodeBuilder(className, nameSpace);
 
@@ -54,7 +54,7 @@ internal class CodeBuilder : IDisposable
         return true;
     }
 
-    public bool AppendCommand(string argumentType, string methodName, string? canMethodName)
+    public bool AppendCommand(string? argumentType, string methodName, string? canMethodName)
     {
         if (_mapMethodNames.ContainsKey(methodName))
             return true;
@@ -129,22 +129,23 @@ internal class CodeBuilder : IDisposable
         if (string.IsNullOrWhiteSpace(type) || string.IsNullOrWhiteSpace(fieldName) || string.IsNullOrWhiteSpace(propertyName))
             return default;
 
-        var oldString = "@old";
-        var newString = "@new";
         var code = 
             $"""
-                public {type} {propertyName} 
-                {'{'} 
+                public {type} {propertyName}
+                {'{'}
                     get => {fieldName};
-                    set => SetProperty(ref _title, value, ({oldString},{newString}) =>
-                    {'{'} 
-                        {propertyName}Changing({oldString});
-                        {propertyName}Changing({oldString}, {newString});
-                    {'}'}, (@old, @new) =>
-                    {'{'} 
-                        {propertyName}Changed({oldString}, {newString});
-                        {propertyName}Changed({oldString});
-                    {'}'});
+                    set
+                    {'{'}
+                        if (EqualityComparer<{type}>.Default.Equals({fieldName}, value)) return;
+                        var @old = {fieldName};
+                        var @new = value;
+
+                        {propertyName}Changing(@old);
+                        {propertyName}Changing(@old, @new);
+                        RaisePropertyChanged();
+                        {propertyName}Changed(@old, @new);
+                        {propertyName}Changed(@new);
+                    {'}'}
                 {'}'}
 
                 partial void {propertyName}Changing({type} oldValue);
@@ -152,6 +153,27 @@ internal class CodeBuilder : IDisposable
                 partial void {propertyName}Changed({type} oldValue, {type} newValue);
                 partial void {propertyName}Changed({type} newValue);
             """;
+        //var code = 
+        //    $"""
+        //        public {type} {propertyName} 
+        //        {'{'} 
+        //            get => {fieldName};
+        //            set => SetProperty(ref _title, value, ({oldString},{newString}) =>
+        //            {'{'} 
+        //                {propertyName}Changing({oldString});
+        //                {propertyName}Changing({oldString}, {newString});
+        //            {'}'}, (@old, @new) =>
+        //            {'{'} 
+        //                {propertyName}Changed({oldString}, {newString});
+        //                {propertyName}Changed({oldString});
+        //            {'}'});
+        //        {'}'}
+
+        //        partial void {propertyName}Changing({type} oldValue);
+        //        partial void {propertyName}Changing({type} oldValue, {type} newValue);
+        //        partial void {propertyName}Changed({type} oldValue, {type} newValue);
+        //        partial void {propertyName}Changed({type} newValue);
+        //    """;
         return code;
     }
 
@@ -167,19 +189,31 @@ internal class CodeBuilder : IDisposable
         return builder.ToString();
     }
 
-    string? BuildCommand(string argumentType, string methodName, string? canMethodName)
+    string? BuildCommand(string? argumentType, string methodName, string? canMethodName)
     {
-        if (string.IsNullOrWhiteSpace(argumentType) || string.IsNullOrWhiteSpace(methodName))
+        if (string.IsNullOrWhiteSpace(methodName))
             return default;
 
         var commandString = "Command";
         var arguments = string.IsNullOrWhiteSpace(canMethodName) ? $"{methodName}" : $"{methodName}, {canMethodName}";
 
-        var code = 
+        string code;
+        if (string.IsNullOrWhiteSpace(argumentType))
+        {
+            code =
             $"""
+                DelegateCommand _{methodName}{commandString};
+                public ICommand {methodName}{commandString} => _{methodName}{commandString} ??= new DelegateCommand({arguments});
+            """;
+        }
+        else
+        {
+            code =
+           $"""
                 DelegateCommand<{argumentType}> _{methodName}{commandString};
                 public ICommand {methodName}{commandString} => _{methodName}{commandString} ??= new DelegateCommand<{argumentType}>({arguments});
             """;
+        }
 
         return code;
     }

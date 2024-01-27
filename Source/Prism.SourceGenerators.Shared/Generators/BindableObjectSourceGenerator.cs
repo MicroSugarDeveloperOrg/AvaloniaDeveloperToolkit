@@ -16,7 +16,7 @@ public class BindableObjectSourceGenerator : ISourceGenerator
         context.RegisterForPostInitialization(context =>
         {
             context.CreateSourceCodeFromEmbeddedResource(__BindableObjectAttributeEmbeddedResourceName__);
-            context.CreateSourceCodeFromEmbeddedResource(__BindableObjectEmbeddedResourceName__);
+            //context.CreateSourceCodeFromEmbeddedResource(__BindableObjectEmbeddedResourceName__);
         });
 
         context.RegisterForSyntaxNotifications(() => new SyntaxContextReceiver());

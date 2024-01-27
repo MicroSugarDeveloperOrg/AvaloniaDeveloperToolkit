@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace Prism.SourceGenerators.Extensions;
+
 internal static class CompilationExtensions
 {
     public static bool TryBuildNamedTypeSymbolMap<T>(
