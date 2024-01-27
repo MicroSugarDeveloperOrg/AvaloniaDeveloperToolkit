@@ -1,47 +1,26 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
-using System.Windows.Input;
 
 namespace Avalonia.Sample.ViewModels;
 
 [BindableObject]
 public partial class MainViewModel
 {
-    public string Greeting => "Welcome to Avalonia!";
+    public MainViewModel()
+    {
+        
+    }
 
     [BindableProperty]
-    string _title = string.Empty;
+    string _greeting = "\"Welcome to Avalonia!\"";
 
-    //[BindableProperty]
-    //public string Txt = string.Empty;
+    partial void GreetingChanging(string oldValue, string newValue)
+    {
+    }
 
-    //public string Title
-    //{
-    //    get => _title;
-    //    set
-    //    {
-    //        if (EqualityComparer<string>.Default.Equals(_title, value)) return;
-
-    //        var @old = _title;
-    //        var @new = value;
-
-    //        TitleChanging(@old);
-    //        TitleChanging(@old, @new);
-
-    //        RaisePropertyChanged();
-
-
-    //        TitleChanged(@old, @new);
-    //        TitleChanged(@new);
-    //    }
-    //}
-
-
-
-
-    //DelegateCommand<object>? _command;
-
-    //public ICommand Command => _command ??= new DelegateCommand<object>(Test, CanTest);
+    partial void GreetingChanged(string oldValue, string newValue)
+    {
+    }
 
     [BindableCommand(nameof(CanTest))]
     void Test(object obj)
