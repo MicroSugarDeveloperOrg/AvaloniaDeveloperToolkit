@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
-using static Prism.SourceGenerators.Helpers.CodeHelpers;
+﻿using static Prism.SourceGenerators.Helpers.CodeHelpers;
 
 namespace Prism.SourceGenerators.Extensions;
 internal static class GeneratorPostInitializationContextExtensions

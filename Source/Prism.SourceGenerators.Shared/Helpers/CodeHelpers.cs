@@ -1,4 +1,5 @@
 ﻿namespace Prism.SourceGenerators.Helpers;
+
 internal class CodeHelpers
 {
     public const string __PrismMvvmHeader__ = "Prism.Mvvm";

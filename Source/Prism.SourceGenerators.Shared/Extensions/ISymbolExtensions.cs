@@ -1,4 +1,5 @@
 ﻿namespace Prism.SourceGenerators.Extensions;
+
 internal static class ISymbolExtensions
 {
     public static bool HasAttributeWithType(this ISymbol symbol, ITypeSymbol typeSymbol)

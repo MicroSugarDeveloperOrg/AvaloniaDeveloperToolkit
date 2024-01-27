@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.Operations;
+using Prism.SourceGenerators.Extensions;
 using Prism.SourceGenerators.Helpers;
-using Prism.SourceGenerators.Shared.Extensions;
 
 namespace Prism.SourceGenerators.Diagnostics.Analyzers;
 
@@ -23,7 +23,7 @@ public sealed class FieldUsingAttributeForBindablePropertyAnalyzer : DiagnosticA
             if (context.Compilation.GetTypeByMetadataName(CodeHelpers.__BindablePropertyAttribute__) is not INamedTypeSymbol bindablePropertySymbol)
                 return;
 
-            context.RegisterOperationAction(context => 
+            context.RegisterOperationAction(context =>
             {
                 if (context.Operation is not IFieldReferenceOperation
                     {
@@ -58,7 +58,7 @@ public sealed class FieldUsingAttributeForBindablePropertyAnalyzer : DiagnosticA
                     }
                 }
 
-            }, OperationKind.FieldReference);   
+            }, OperationKind.FieldReference);
         });
     }
 }

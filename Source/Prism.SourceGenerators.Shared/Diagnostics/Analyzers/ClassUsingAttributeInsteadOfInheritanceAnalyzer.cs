@@ -1,7 +1,4 @@
 ﻿using Prism.SourceGenerators.Extensions;
-using Prism.SourceGenerators.Generators;
-using System.Collections.Generic;
-using System.Linq;
 using static Prism.SourceGenerators.Helpers.CodeHelpers;
 
 namespace Prism.SourceGenerators.Diagnostics.Analyzers;
@@ -15,7 +12,7 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceAnalyzer : Diagnostic
 
     private static readonly ImmutableDictionary<string, string> GeneratorAttributeNamesToFullyQualifiedNamesMap = ImmutableDictionary.CreateRange(new[]
     {
-        new KeyValuePair<string, string>("BindableObjectAttribute", "Prism.Mvvm.BindableObjectAttribute"), 
+        new KeyValuePair<string, string>("BindableObjectAttribute", "Prism.Mvvm.BindableObjectAttribute"),
     });
 
     private static readonly ImmutableDictionary<string, DiagnosticDescriptor> GeneratorAttributeNamesToDiagnosticsMap = ImmutableDictionary.CreateRange(new[]
@@ -51,6 +48,7 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceAnalyzer : Diagnostic
                         {
                             if (baseType.ToDisplayString() != __BindableObject__ && baseType.ToDisplayString() != "object")
                             {
+#pragma warning disable RS1005 // ReportDiagnostic invoked with an unsupported DiagnosticDescriptor
                                 context.ReportDiagnostic(Diagnostic.Create(
                                     DiagnosticDescriptors.DuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError,
                                         context.Symbol.Locations.FirstOrDefault(),
@@ -58,6 +56,7 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceAnalyzer : Diagnostic
                                             .Add(TypeNameKey, classSymbol.Name)
                                             .Add(AttributeTypeNameKey, attributeName),
                                             context.Symbol));
+#pragma warning restore RS1005 // ReportDiagnostic invoked with an unsupported DiagnosticDescriptor
                             }
                         }
                     }

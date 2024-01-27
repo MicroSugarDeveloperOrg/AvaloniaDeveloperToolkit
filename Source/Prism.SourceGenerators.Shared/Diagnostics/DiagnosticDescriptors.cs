@@ -1,7 +1,8 @@
 ﻿using Prism.SourceGenerators.Generators;
-using System.ComponentModel;
 
 namespace Prism.SourceGenerators.Diagnostics;
+
+#pragma warning disable RS2008 // Enable analyzer release tracking
 
 internal static class DiagnosticDescriptors
 {
@@ -79,3 +80,5 @@ internal static class DiagnosticDescriptors
            description: $"Cannot apply [BindableObject] to a type that already declares the {nameof(INotifyPropertyChanged)} interface.",
            helpLinkUri: "");
 }
+#pragma warning restore RS2008 // Enable analyzer release tracking
+

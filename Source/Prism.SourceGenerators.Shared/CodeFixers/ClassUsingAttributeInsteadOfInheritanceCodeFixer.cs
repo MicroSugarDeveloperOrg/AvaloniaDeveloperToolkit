@@ -1,10 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Text;
-using Prism.SourceGenerators.Diagnostics.Analyzers;
-using System.Composition;
-using System.Threading.Tasks;
+﻿using Prism.SourceGenerators.Diagnostics.Analyzers;
 
 namespace Prism.SourceGenerators.CodeFixers;
 

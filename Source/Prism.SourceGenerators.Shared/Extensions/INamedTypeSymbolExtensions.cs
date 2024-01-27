@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿namespace Prism.SourceGenerators.Extensions;
 
-namespace Prism.SourceGenerators.Extensions;
 internal static class INamedTypeSymbolExtensions
 {
     public static IEnumerable<ISymbol> GetAllMembers(this INamedTypeSymbol symbol)

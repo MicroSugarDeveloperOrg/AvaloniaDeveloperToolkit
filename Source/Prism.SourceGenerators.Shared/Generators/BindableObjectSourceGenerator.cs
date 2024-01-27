@@ -1,9 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Text;
-using Prism.SourceGenerators.Diagnostics;
+﻿using Prism.SourceGenerators.Diagnostics;
 using Prism.SourceGenerators.Extensions;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using static Prism.SourceGenerators.Helpers.CodeHelpers;
 
 namespace Prism.SourceGenerators.Generators;
@@ -51,11 +47,11 @@ public class BindableObjectSourceGenerator : ISourceGenerator
                     isBaseType = true;
             }
 
-           
+
             var classCode = BuildClassCode(namedTypeSymbol, isBaseType);
             if (string.IsNullOrWhiteSpace(classCode))
                 continue;
-         
+
             context.AddSource($"{namedTypeSymbol.Name}_{__BindableObjectEmbeddedResourceName__}.{__GeneratorCSharpFileExtension__}", SourceText.From(classCode!, Encoding.UTF8));
         }
 

@@ -1,5 +1,4 @@
 ﻿using Prism.SourceGenerators.Extensions;
-using System.Linq;
 using static Prism.SourceGenerators.Helpers.CodeHelpers;
 
 namespace Prism.SourceGenerators.Diagnostics.Analyzers;

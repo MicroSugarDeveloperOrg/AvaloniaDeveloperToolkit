@@ -9,7 +9,7 @@ internal static class CodeBuilderExtensions
 
     public static CodeBuilder AppendUsePropertySystemNameSpace(this CodeBuilder builder)
     {
-        var bRet = builder.AppendUseNameSpace("System"); 
+        var bRet = builder.AppendUseNameSpace("System");
         bRet = builder.AppendUseNameSpace("Prism.Mvvm");
         return builder;
     }

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿namespace Prism.SourceGenerators.Extensions;
 
-namespace Prism.SourceGenerators.Extensions;
 internal static class AttributeDataExtensions
 {
     public static Location? GetLocation(this AttributeData attributeData)
@@ -26,5 +25,5 @@ internal static class AttributeDataExtensions
         return false;
     }
 
-    
+
 }

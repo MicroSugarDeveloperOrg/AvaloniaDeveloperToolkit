@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Prism.SourceGenerators.Extensions;
+﻿namespace Prism.SourceGenerators.Extensions;
 
 internal static class CompilationExtensions
 {

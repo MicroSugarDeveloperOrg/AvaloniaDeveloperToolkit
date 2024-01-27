@@ -1,6 +1,5 @@
-﻿using System.Globalization;
+﻿namespace Prism.SourceGenerators.Extensions;
 
-namespace Prism.SourceGenerators.Shared.Extensions;
 internal static class IFieldSymbolExtensions
 {
     public static string CreateGeneratedPropertyName(this IFieldSymbol fieldSymbol)

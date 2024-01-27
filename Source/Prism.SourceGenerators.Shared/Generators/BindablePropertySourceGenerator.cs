@@ -1,12 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
-using Prism.SourceGenerators.Builder;
+﻿using Prism.SourceGenerators.Builder;
 using Prism.SourceGenerators.Diagnostics;
 using Prism.SourceGenerators.Extensions;
-using Prism.SourceGenerators.Shared.Extensions;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using static Prism.SourceGenerators.Helpers.CodeHelpers;
 
 namespace Prism.SourceGenerators.Generators;
@@ -116,6 +110,6 @@ public class BindablePropertySourceGenerator : ISourceGenerator
 
     }
 
-     
+
 
 }

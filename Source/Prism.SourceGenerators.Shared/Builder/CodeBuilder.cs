@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace Prism.SourceGenerators.Builder;
+﻿namespace Prism.SourceGenerators.Builder;
 
 internal class CodeBuilder : IDisposable
 {
@@ -69,7 +66,7 @@ internal class CodeBuilder : IDisposable
             return default;
 
         //先写NameSpace
-        var code = 
+        var code =
             $"""
             {BuildNameSpaces()}
             namespace {_nameSpace};
@@ -96,18 +93,18 @@ internal class CodeBuilder : IDisposable
         _mapPropertyNames = null!;
 
         _mapMethodNames.Clear();
-        _mapMethodNames = null!;    
+        _mapMethodNames = null!;
 
         return true;
     }
 
     string BuildNameSpaces()
     {
-        StringBuilder builder = new();    
+        StringBuilder builder = new();
         foreach (var item in _namespaces)
             builder.AppendLine($"using {item};");
 
-        return builder.ToString();  
+        return builder.ToString();
     }
 
     string BuildClassName() => string.IsNullOrWhiteSpace(_baseTypeName) ? _className : $"{_className} : {_baseTypeName}";
@@ -129,7 +126,7 @@ internal class CodeBuilder : IDisposable
         if (string.IsNullOrWhiteSpace(type) || string.IsNullOrWhiteSpace(fieldName) || string.IsNullOrWhiteSpace(propertyName))
             return default;
 
-        var code = 
+        var code =
             $"""
                 public {type} {propertyName}
                 {'{'}
