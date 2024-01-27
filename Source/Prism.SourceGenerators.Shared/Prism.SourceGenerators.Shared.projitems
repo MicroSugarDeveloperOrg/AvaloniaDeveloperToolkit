@@ -3,6 +3,7 @@
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
+    <RootNamespace>Prism.SourceGenerators</RootNamespace>
     <SharedGUID>737f7c0a-e6f9-4c91-a703-4281b048a1a4</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
