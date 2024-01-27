@@ -4,11 +4,16 @@
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <SharedGUID>dd89585d-923d-4c24-9a45-80e77a0a07f4</SharedGUID>
-    <RootNamespace>Rx.SourceGenerators</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Rx.SourceGenerator.Shared</Import_RootNamespace>
+    <Import_RootNamespace>Rx.SourceGenerators</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builder\CodeBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builder\CodeBuilderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CodeHelpers.cs" />
   </ItemGroup>
 </Project>
