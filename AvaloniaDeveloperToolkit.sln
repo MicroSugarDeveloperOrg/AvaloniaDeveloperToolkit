@@ -38,9 +38,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prism.SourceGenerators", "S
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Prism.SourceGenerators.Shared", "Source\Prism.SourceGenerators.Shared\Prism.SourceGenerators.Shared.shproj", "{737F7C0A-E6F9-4C91-A703-4281B048A1A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rx.SourceGenerators", "Source\Rx.SourceGenerators\Rx.SourceGenerators.csproj", "{3088421F-0FCE-4B47-928A-6832E098604F}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rx.SourceGenerators.Shared", "Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.shproj", "{DD89585D-923D-4C24-9A45-80E77A0A07F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rx.SourceGenerators", "Source\Rx.SourceGenerators\Rx.SourceGenerators.csproj", "{3EE726E1-514A-4DA2-8DDE-6CC7D2AF507E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,10 +80,10 @@ Global
 		{6F59BE87-96DB-47D8-8D05-493C5C0D2F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F59BE87-96DB-47D8-8D05-493C5C0D2F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F59BE87-96DB-47D8-8D05-493C5C0D2F6A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3088421F-0FCE-4B47-928A-6832E098604F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3088421F-0FCE-4B47-928A-6832E098604F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3088421F-0FCE-4B47-928A-6832E098604F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3088421F-0FCE-4B47-928A-6832E098604F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EE726E1-514A-4DA2-8DDE-6CC7D2AF507E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EE726E1-514A-4DA2-8DDE-6CC7D2AF507E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EE726E1-514A-4DA2-8DDE-6CC7D2AF507E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EE726E1-514A-4DA2-8DDE-6CC7D2AF507E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,7 +99,7 @@ Global
 		SolutionGuid = {B9B3B5F7-C96A-4EF1-9CCA-2DC65EEB0356}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems*{3088421f-0fce-4b47-928a-6832e098604f}*SharedItemsImports = 5
+		Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems*{3ee726e1-514a-4da2-8dde-6cc7d2af507e}*SharedItemsImports = 5
 		Source\Prism.SourceGenerators.Shared\Prism.SourceGenerators.Shared.projitems*{6f59be87-96db-47d8-8d05-493c5c0d2f6a}*SharedItemsImports = 5
 		Source\Prism.SourceGenerators.Shared\Prism.SourceGenerators.Shared.projitems*{737f7c0a-e6f9-4c91-a703-4281b048a1a4}*SharedItemsImports = 13
 		Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems*{dd89585d-923d-4c24-9a45-80e77a0a07f4}*SharedItemsImports = 13
