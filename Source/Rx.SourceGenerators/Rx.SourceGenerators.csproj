@@ -1,9 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+	</PropertyGroup>
 
-  <Import Project="..\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems" Label="Shared" />
+	<!-- Necessary polyfills -->
+	<PropertyGroup>
+		<PolySharpIncludeGeneratedTypes>
+			System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;
+			System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute;
+			System.Diagnostics.CodeAnalysis.MemberNotNullAttribute;
+			System.Diagnostics.CodeAnalysis.NotNullAttribute;
+			System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute;
+			System.Diagnostics.CodeAnalysis.NotNullWhenAttribute;
+			System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute;
+			System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute;
+			System.Runtime.CompilerServices.CallerArgumentExpressionAttribute;
+			System.Runtime.CompilerServices.IsExternalInit;
+			System.Runtime.CompilerServices.SkipLocalsInitAttribute;
+		</PolySharpIncludeGeneratedTypes>
+	</PropertyGroup>
+	
+	<Import Project="..\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems" Label="Shared" />
+	<Import Project="..\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems" Label="Shared" />
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+		<PackageReference Include="PolySharp">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>build; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
 </Project>

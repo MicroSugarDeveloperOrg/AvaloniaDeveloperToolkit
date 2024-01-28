@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>1370d02c-d3e0-48b7-a5b1-25f80c2f95d6</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SourceGeneratorToolkit</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\ICodeProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\DiagnosticDescriptors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttributeDataExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\GeneratorPostInitializationContextExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CommonHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\CommandSyntaxContextReceiver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\ObjectSyntaxContextReceiver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\PropertySyntaxContextReceiver.cs" />
+  </ItemGroup>
+</Project>

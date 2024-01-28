@@ -42,6 +42,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rx.SourceGenerators.Shared"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rx.SourceGenerators", "Source\Rx.SourceGenerators\Rx.SourceGenerators.csproj", "{3EE726E1-514A-4DA2-8DDE-6CC7D2AF507E}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SourceGeneratorToolkit.Shared", "Source\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.shproj", "{1370D02C-D3E0-48B7-A5B1-25F80C2F95D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,7 +101,9 @@ Global
 		SolutionGuid = {B9B3B5F7-C96A-4EF1-9CCA-2DC65EEB0356}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Source\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems*{1370d02c-d3e0-48b7-a5b1-25f80c2f95d6}*SharedItemsImports = 13
 		Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems*{3ee726e1-514a-4da2-8dde-6cc7d2af507e}*SharedItemsImports = 5
+		Source\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems*{3ee726e1-514a-4da2-8dde-6cc7d2af507e}*SharedItemsImports = 5
 		Source\Prism.SourceGenerators.Shared\Prism.SourceGenerators.Shared.projitems*{6f59be87-96db-47d8-8d05-493c5c0d2f6a}*SharedItemsImports = 5
 		Source\Prism.SourceGenerators.Shared\Prism.SourceGenerators.Shared.projitems*{737f7c0a-e6f9-4c91-a703-4281b048a1a4}*SharedItemsImports = 13
 		Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems*{dd89585d-923d-4c24-9a45-80e77a0a07f4}*SharedItemsImports = 13

@@ -9,11 +9,14 @@
     <Import_RootNamespace>Rx.SourceGenerators</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxProperty.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Builder\CodeBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxCommandAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxObjectAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxPropertyAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builder\CodeBuilderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\RxObjectSourceGenerator.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\RxCommandAttribute.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\RxObjectAttribute.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\RxPropertyAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CodeHelpers.cs" />
   </ItemGroup>
 </Project>
