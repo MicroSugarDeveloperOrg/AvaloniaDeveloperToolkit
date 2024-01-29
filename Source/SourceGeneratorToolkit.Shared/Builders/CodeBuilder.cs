@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace SourceGeneratorToolkit.Builders;
 
-namespace SourceGeneratorToolkit.Builders;
 internal class CodeBuilder : IDisposable
 {
-    private CodeBuilder(string nameSpace, string className, ICodeProvider provider)
+    private CodeBuilder(string nameSpace, string className, ICodeProvider? provider)
     {
         _className = className;
         _nameSpace = nameSpace;
@@ -13,7 +10,7 @@ internal class CodeBuilder : IDisposable
         _provider = provider;
     }
 
-    ICodeProvider _provider;
+    ICodeProvider? _provider;
 
     string _className;
     string _nameSpace;
@@ -23,9 +20,9 @@ internal class CodeBuilder : IDisposable
     List<string> _namespaces = [];
     List<string> _interfaceNames = [];
     Dictionary<string, (string type, string field)> _mapPropertyNames = [];
-    Dictionary<string, (string? argType, string? can)> _mapMethodNames = [];
+    Dictionary<string, (string? argType, string? returnType, string? can)> _mapMethodNames = [];
 
-    public static CodeBuilder CreateBuilder(string className, string nameSpace, ICodeProvider provider) => new CodeBuilder(className, nameSpace, provider);
+    public static CodeBuilder CreateBuilder(string nameSpace, string className,ICodeProvider? provider) => new CodeBuilder(nameSpace, className, provider);
 
     public string CommandString
     {
@@ -35,7 +32,7 @@ internal class CodeBuilder : IDisposable
 
     public string RaisePropertyString
     {
-        get => _raisePropertyString; 
+        get => _raisePropertyString;
         set => _raisePropertyString = value;
     }
 
@@ -72,12 +69,12 @@ internal class CodeBuilder : IDisposable
         return true;
     }
 
-    public bool AppendCommand(string? argumentType, string methodName, string? canMethodName)
+    public bool AppendCommand(string? argumentType, string? returnType, string methodName, string? canMethodName)
     {
         if (_mapMethodNames.ContainsKey(methodName))
             return true;
 
-        _mapMethodNames.Add(methodName, (argumentType, canMethodName));
+        _mapMethodNames.Add(methodName, (argumentType, returnType, canMethodName));
         return true;
     }
 
@@ -92,11 +89,13 @@ internal class CodeBuilder : IDisposable
             {BuildNameSpaces()}
             namespace {_nameSpace};
 
+            #nullable enable
             partial class {BuildClassName()}
             {'{'} 
             {BuildProperties()}
             {BuildCommands()}
             {'}'}
+            #nullable disable
             """;
 
         return code;
@@ -147,7 +146,7 @@ internal class CodeBuilder : IDisposable
         if (string.IsNullOrWhiteSpace(type) || string.IsNullOrWhiteSpace(fieldName) || string.IsNullOrWhiteSpace(propertyName))
             return default;
 
-        var raisePropertyString = _provider.GetRaisePropertyString();
+        var raisePropertyString = _provider?.GetRaisePropertyString(fieldName, propertyName);
         var code =
             $"""
                 public {type} {propertyName}
@@ -172,27 +171,7 @@ internal class CodeBuilder : IDisposable
                 partial void {propertyName}Changed({type} oldValue, {type} newValue);
                 partial void {propertyName}Changed({type} newValue);
             """;
-        //var code = 
-        //    $"""
-        //        public {type} {propertyName} 
-        //        {'{'} 
-        //            get => {fieldName};
-        //            set => SetProperty(ref _title, value, ({oldString},{newString}) =>
-        //            {'{'} 
-        //                {propertyName}Changing({oldString});
-        //                {propertyName}Changing({oldString}, {newString});
-        //            {'}'}, (@old, @new) =>
-        //            {'{'} 
-        //                {propertyName}Changed({oldString}, {newString});
-        //                {propertyName}Changed({oldString});
-        //            {'}'});
-        //        {'}'}
 
-        //        partial void {propertyName}Changing({type} oldValue);
-        //        partial void {propertyName}Changing({type} oldValue, {type} newValue);
-        //        partial void {propertyName}Changed({type} oldValue, {type} newValue);
-        //        partial void {propertyName}Changed({type} newValue);
-        //    """;
         return code;
     }
 
@@ -201,22 +180,22 @@ internal class CodeBuilder : IDisposable
         StringBuilder builder = new();
         foreach (var item in _mapMethodNames)
         {
-            builder.Append(BuildCommand(item.Value.argType, item.Key, item.Value.can));
+            builder.Append(BuildCommand(item.Value.argType, item.Value.returnType , item.Key, item.Value.can));
             builder.AppendLine();
         }
 
         return builder.ToString();
     }
 
-    string? BuildCommand(string? argumentType, string methodName, string? canMethodName)
+    string? BuildCommand(string? argumentType, string? returnType, string methodName, string? canMethodName)
     {
         if (string.IsNullOrWhiteSpace(methodName))
             return default;
 
-        var commandString = "Command";
-        var arguments = string.IsNullOrWhiteSpace(canMethodName) ? $"{methodName}" : $"{methodName}, {canMethodName}";
+        //var commandString = "Command";
+        //var arguments = string.IsNullOrWhiteSpace(canMethodName) ? $"{methodName}" : $"{methodName}, {canMethodName}";
 
-        return _provider.CreateCommandString();
+        return _provider?.CreateCommandString(argumentType, returnType, methodName, canMethodName);
     }
 
     public void Dispose()

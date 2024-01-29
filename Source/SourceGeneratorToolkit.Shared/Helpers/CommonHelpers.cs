@@ -1,4 +1,5 @@
 ﻿namespace SourceGeneratorToolkit.Helpers;
+
 internal class CommonHelpers
 {
     public const string __EmbeddedResourcesHeader__ = "EmbeddedResources";

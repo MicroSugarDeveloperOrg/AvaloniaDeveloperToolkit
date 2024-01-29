@@ -13,7 +13,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxObjectAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\RxPropertyAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builder\CodeBuilderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\RxCommandSourceGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Generators\RxObjectSourceGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\RxPropertySourceGenerator.cs" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\RxCommandAttribute.cs" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\RxObjectAttribute.cs" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\RxPropertyAttribute.cs" />

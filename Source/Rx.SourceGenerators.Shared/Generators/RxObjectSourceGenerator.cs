@@ -14,7 +14,7 @@ public sealed class RxObjectSourceGenerator : ISourceGenerator
     void ISourceGenerator.Initialize(GeneratorInitializationContext context)
     {
         context.RegisterForPostInitialization(context => context.CreateSourceCodeFromEmbeddedResource(__RxObjectAttributeEmbeddedResourceName__, __GeneratorCSharpFileHeader__));
-        context.RegisterForSyntaxNotifications(() => new ObjectSyntaxContextReceiver(__RxObjectAttribute__));
+        context.RegisterForSyntaxNotifications(() => new ObjectSyntaxContextReceiver(__RxObjectFullAttribute__));
     }
 
     void ISourceGenerator.Execute(GeneratorExecutionContext context)
@@ -24,11 +24,15 @@ public sealed class RxObjectSourceGenerator : ISourceGenerator
             return;
 
         var map = syntaxContextReceiver.GetClasses();
+
         foreach (var classSymbol in map)
         {
-            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.Name, classSymbol.ContainingNamespace.ToDisplayString(), default!);
+            if (classSymbol is null)
+                continue;
+
+            //Debugger.Launch();
+            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, default!);
             var baseType = classSymbol.BaseType;
-            bool isBaseType = false;
 
             if (baseType is not null)
             {
@@ -38,16 +42,15 @@ public sealed class RxObjectSourceGenerator : ISourceGenerator
                     {
                         context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateDuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError<RxObjectSourceGenerator>(__RxObject__),
                                                  classSymbol.Locations.FirstOrDefault(),
-                                                 classSymbol));
+                                                 baseType.Name));
                     }
                 }
                 else
-                    isBaseType = true;
+                    continue;
             }
 
-            if (!isBaseType)
-                builder.AppendBaseType(__RxObjectFull__);
-
+            builder.AppendUsePropertySystemNameSpace();
+            builder.AppendBaseType(__RxObject__);
             context.AddSource($"{classSymbol.Name}_{__RxObjectAttributeEmbeddedResourceName__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));
         }
 

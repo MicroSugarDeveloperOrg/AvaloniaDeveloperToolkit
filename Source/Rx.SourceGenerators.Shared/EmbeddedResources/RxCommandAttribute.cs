@@ -1,5 +1,8 @@
-﻿namespace ReactiveUI;
+﻿using System;
 
+namespace ReactiveUI;
+
+#nullable disable
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
 internal class RxCommandAttribute : Attribute
 {
@@ -8,10 +11,11 @@ internal class RxCommandAttribute : Attribute
 
     }
 
-    public RxCommandAttribute(string? canExecuteString)
+    public RxCommandAttribute(string canExecuteString)
     {
         CanExecuteString = canExecuteString;
     }
 
-    public string? CanExecuteString { get; set; }
+    public string CanExecuteString { get; set; }
 }
+#nullable enable

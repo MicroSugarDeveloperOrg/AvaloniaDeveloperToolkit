@@ -2,6 +2,11 @@
 
 internal sealed class CommandSyntaxContextReceiver : ISyntaxContextReceiver
 {
+    public CommandSyntaxContextReceiver(string commandAttributeString)
+    {
+        CommandAttributeString = commandAttributeString;
+    }
+
     Dictionary<INamedTypeSymbol, List<IMethodSymbol>> _mapMethods = [];
 
     public string CommandAttributeString { get; set; } = string.Empty;

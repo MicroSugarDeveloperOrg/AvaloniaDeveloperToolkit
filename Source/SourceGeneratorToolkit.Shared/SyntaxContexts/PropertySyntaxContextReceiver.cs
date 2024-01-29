@@ -2,9 +2,14 @@
 
 internal sealed class PropertySyntaxContextReceiver : ISyntaxContextReceiver
 {
+    public PropertySyntaxContextReceiver(string propertyAttributeString)
+    {
+        PropertyAttributeString = propertyAttributeString;
+    }
+
     Dictionary<INamedTypeSymbol, List<IFieldSymbol>> _mapFields = [];
 
-    public string PropertyAttributeString { get; set; } = string.Empty;
+    public string PropertyAttributeString { get; init; }
 
     void ISyntaxContextReceiver.OnVisitSyntaxNode(GeneratorSyntaxContext context)
     {

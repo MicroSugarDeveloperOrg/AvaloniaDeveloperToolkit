@@ -20,6 +20,7 @@
 	<ItemGroup>
 		<!--<ProjectReference Include="..\..\Avalonia.SourceGenerators\Avalonia.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />-->
 		<ProjectReference Include="..\..\Prism.SourceGenerators\Prism.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+		<ProjectReference Include="..\..\Rx.SourceGenerators\Rx.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
 	</ItemGroup>
 </Project>
 

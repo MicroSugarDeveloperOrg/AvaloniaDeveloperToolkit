@@ -14,6 +14,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\DiagnosticDescriptors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttributeDataExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GeneratorPostInitializationContextExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IFieldSymbolExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IMethodSymbolExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ISymbolExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ITypeSymbolExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringFormatExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CommonHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\CommandSyntaxContextReceiver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\ObjectSyntaxContextReceiver.cs" />
