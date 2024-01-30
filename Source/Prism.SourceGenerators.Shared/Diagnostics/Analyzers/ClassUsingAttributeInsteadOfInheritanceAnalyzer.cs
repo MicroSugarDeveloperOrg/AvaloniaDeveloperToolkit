@@ -46,7 +46,7 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceAnalyzer : Diagnostic
                             typeSymbols.TryGetValue(attributeName, out INamedTypeSymbol? attributeSymbol) &&
                             SymbolEqualityComparer.Default.Equals(attributeClass, attributeSymbol))
                         {
-                            if (baseType.ToDisplayString() != __BindableObject__ && baseType.ToDisplayString() != "object")
+                            if (baseType.ToDisplayString() != __BindableFullObject__ && baseType.ToDisplayString() != "object")
                             {
 #pragma warning disable RS1005 // ReportDiagnostic invoked with an unsupported DiagnosticDescriptor
                                 context.ReportDiagnostic(Diagnostic.Create(

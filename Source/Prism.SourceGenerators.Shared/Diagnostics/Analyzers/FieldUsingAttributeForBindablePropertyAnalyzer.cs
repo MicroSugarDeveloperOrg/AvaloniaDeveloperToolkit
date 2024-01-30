@@ -20,7 +20,7 @@ public sealed class FieldUsingAttributeForBindablePropertyAnalyzer : DiagnosticA
 
         context.RegisterCompilationStartAction(static context =>
         {
-            if (context.Compilation.GetTypeByMetadataName(CodeHelpers.__BindablePropertyAttribute__) is not INamedTypeSymbol bindablePropertySymbol)
+            if (context.Compilation.GetTypeByMetadataName(CodeHelpers.__BindablePropertyFullAttribute__) is not INamedTypeSymbol bindablePropertySymbol)
                 return;
 
             context.RegisterOperationAction(context =>

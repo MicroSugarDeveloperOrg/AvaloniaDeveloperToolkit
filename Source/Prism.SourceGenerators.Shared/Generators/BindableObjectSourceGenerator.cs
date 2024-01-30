@@ -34,7 +34,7 @@ public class BindableObjectSourceGenerator : ISourceGenerator
 
             if (baseType is not null)
             {
-                if (baseType.ToDisplayString() != __BindableObject__)
+                if (baseType.ToDisplayString() != __BindableFullObject__)
                 {
                     if (baseType.ToDisplayString() != __object__)
                     {
@@ -52,7 +52,7 @@ public class BindableObjectSourceGenerator : ISourceGenerator
             if (string.IsNullOrWhiteSpace(classCode))
                 continue;
 
-            context.AddSource($"{namedTypeSymbol.Name}_{__BindableObjectEmbeddedResourceName__}.{__GeneratorCSharpFileExtension__}", SourceText.From(classCode!, Encoding.UTF8));
+            context.AddSource($"{namedTypeSymbol.Name}_{__BindableObject__}.{__GeneratorCSharpFileExtension__}", SourceText.From(classCode!, Encoding.UTF8));
         }
 
         map.Clear();
@@ -86,7 +86,7 @@ public class BindableObjectSourceGenerator : ISourceGenerator
                     if (type is null)
                         continue;
 
-                    if (type.ToDisplayString() != __BindableObjectAttribute__)
+                    if (type.ToDisplayString() != __BindableObjectFullAttribute__)
                         continue;
 
                     isFlag = true;
@@ -128,7 +128,7 @@ public class BindableObjectSourceGenerator : ISourceGenerator
             return default;
 
         string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
-        string classDescription = isBaseType ? $"partial class {classSymbol.Name} " : $"partial class {classSymbol.Name} : {__BindableObject__} ";
+        string classDescription = isBaseType ? $"partial class {classSymbol.Name} " : $"partial class {classSymbol.Name} : {__BindableFullObject__} ";
 
         string code = $"""
            namespace {namespaceName};

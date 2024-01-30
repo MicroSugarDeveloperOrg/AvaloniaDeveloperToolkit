@@ -55,7 +55,7 @@ public class BindableCommandSourceGenerator : ISourceGenerator
                     parameterType = parameterSymbol.Type.GetFullyQualifiedName();
 
                 string? canExcMethod = default;
-                var attributeData = methodSymbol.GetAttributes().FirstOrDefault(ad => ad.AttributeClass?.ToDisplayString() == __BindableCommandAttribute__);
+                var attributeData = methodSymbol.GetAttributes().FirstOrDefault(ad => ad.AttributeClass?.ToDisplayString() == __BindableCommandFullAttribute__);
                 if (attributeData is not null)
                 {
                     //get can execute name from  NamedArgument
@@ -115,7 +115,7 @@ public class BindableCommandSourceGenerator : ISourceGenerator
                 return;
 
             //Debugger.Launch();
-            if (!methodSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == __BindableCommandAttribute__))
+            if (!methodSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == __BindableCommandFullAttribute__))
                 return;
 
             var type = methodSymbol.ContainingType;

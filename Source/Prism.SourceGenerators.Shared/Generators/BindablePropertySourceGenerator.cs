@@ -68,7 +68,7 @@ public class BindablePropertySourceGenerator : ISourceGenerator
                     if (symbol is not IFieldSymbol fieldSymbol)
                         continue;
 
-                    if (fieldSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == __BindablePropertyAttribute__))
+                    if (fieldSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == __BindablePropertyFullAttribute__))
                     {
                         //Debugger.Launch();
 

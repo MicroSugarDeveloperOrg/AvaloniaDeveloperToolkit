@@ -19,7 +19,7 @@ internal class MethodUsingAttributeForBindableCommandAnalyzer : DiagnosticAnalyz
 
         context.RegisterCompilationStartAction(static context =>
         {
-            if (context.Compilation.GetTypeByMetadataName(__BindableCommandAttribute__) is not INamedTypeSymbol bindableCommandSymbol)
+            if (context.Compilation.GetTypeByMetadataName(__BindableCommandFullAttribute__) is not INamedTypeSymbol bindableCommandSymbol)
                 return;
 
             context.RegisterSymbolAction(context =>

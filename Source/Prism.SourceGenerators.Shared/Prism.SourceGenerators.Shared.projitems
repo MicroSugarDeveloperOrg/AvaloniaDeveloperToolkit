@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
-    <HasSharedItems>true</HasSharedItems> 
+    <HasSharedItems>true</HasSharedItems>
     <SharedGUID>737f7c0a-e6f9-4c91-a703-4281b048a1a4</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
@@ -12,6 +12,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\BindableObjectAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\BindablePropertyAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\BindableCommandAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\InjectAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\NavigationAttribute%40T.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\NavigationAttribute%40TT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\ScopedAttribute%40TT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\ScopedAttribute%40T.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\ScopedAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\SingletonAttribute%40T.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\SingletonAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\SingletonAttribute%40TT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\TransientAttribute%40TT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\TransientAttribute%40T.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\TransientAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builder\CodeBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builder\CodeBuilderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CodeFixers\ClassUsingAttributeInsteadOfInheritanceCodeFixer.cs" />

@@ -22,6 +22,6 @@ internal class CodeHelpers
     public const string __RxCommand__ = "ReactiveCommand";
     public const string __RxCommandFull__ = $"{__RxHeader__}.{__RxCommand__}";
 
-    public const string __GeneratorCSharpFileHeader__ = "_rx_";
+    public const string __GeneratorCSharpFileHeader__ = "_Rx_";
 
 }

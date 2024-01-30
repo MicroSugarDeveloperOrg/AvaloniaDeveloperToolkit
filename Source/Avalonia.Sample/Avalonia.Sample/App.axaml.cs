@@ -3,32 +3,55 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Sample.ViewModels;
 using Avalonia.Sample.Views;
+using Prism.Ioc;
 
 namespace Avalonia.Sample;
-public partial class App : Application
+public partial class App : Prism.PrismApplicationBase
 {
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    protected override IContainerExtension CreateContainerExtension()
     {
+        throw new NotImplementedException();
+    }
+
+    protected override AvaloniaObject CreateShell()
+    {
+        AvaloniaObject shell = default!;
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow
+            shell =  new MainWindow
             {
                 DataContext = new MainViewModel()
             };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
-            singleViewPlatform.MainView = new MainView
+            shell = new MainView
             {
                 DataContext = new MainViewModel()
             };
         }
 
-        base.OnFrameworkInitializationCompleted();
+        return shell;
     }
+
+    protected override void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+        RegisterViewViewModel(containerRegistry);
+        RegisterForNavigation(containerRegistry);
+
+        //containerRegistry.RegisterSingleton(,);
+        //containerRegistry.RegisterScoped
+        //containerRegistry.Register
+        //containerRegistry.RegisterForNavigation()
+    }
+
+    partial void RegisterViewViewModel(IContainerRegistry containerRegistry);
+
+    partial void RegisterForNavigation(IContainerRegistry containerRegistry);
+
 }
