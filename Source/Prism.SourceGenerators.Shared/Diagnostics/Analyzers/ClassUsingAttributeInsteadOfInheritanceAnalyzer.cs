@@ -1,5 +1,8 @@
-﻿using Prism.SourceGenerators.Extensions;
+﻿using Prism.SourceGenerators.Generators;
+using SourceGeneratorToolkit.Diagnostics;
+using SourceGeneratorToolkit.Extensions;
 using static Prism.SourceGenerators.Helpers.CodeHelpers;
+using static SourceGeneratorToolkit.Helpers.CommonHelpers;
 
 namespace Prism.SourceGenerators.Diagnostics.Analyzers;
 
@@ -12,15 +15,15 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceAnalyzer : Diagnostic
 
     private static readonly ImmutableDictionary<string, string> GeneratorAttributeNamesToFullyQualifiedNamesMap = ImmutableDictionary.CreateRange(new[]
     {
-        new KeyValuePair<string, string>("BindableObjectAttribute", "Prism.Mvvm.BindableObjectAttribute"),
+        new KeyValuePair<string, string>(__BindableObjectAttributeEmbeddedResourceName__, __BindableObjectFullAttribute__),
     });
 
     private static readonly ImmutableDictionary<string, DiagnosticDescriptor> GeneratorAttributeNamesToDiagnosticsMap = ImmutableDictionary.CreateRange(new[]
     {
-        new KeyValuePair<string, DiagnosticDescriptor>("BindableObjectAttribute", DiagnosticDescriptors.InheritFromBindableObjectInsteadOfUsingBindableObjectAttributeWarning),
+        new KeyValuePair<string, DiagnosticDescriptor>(__BindableObjectAttributeEmbeddedResourceName__, DiagnosticDescriptors.CreateInheritFromBindableObjectInsteadOfUsingBindableObjectAttributeWarning<BindableObjectSourceGenerator>(__BindableObject__)),
     });
 
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(DiagnosticDescriptors.InheritFromBindableObjectInsteadOfUsingBindableObjectAttributeWarning);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(DiagnosticDescriptors.CreateInheritFromBindableObjectInsteadOfUsingBindableObjectAttributeWarning<BindableObjectSourceGenerator>(__BindableObject__));
 
     public override void Initialize(AnalysisContext context)
     {
@@ -46,16 +49,15 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceAnalyzer : Diagnostic
                             typeSymbols.TryGetValue(attributeName, out INamedTypeSymbol? attributeSymbol) &&
                             SymbolEqualityComparer.Default.Equals(attributeClass, attributeSymbol))
                         {
-                            if (baseType.ToDisplayString() != __BindableFullObject__ && baseType.ToDisplayString() != "object")
+                            if (baseType.ToDisplayString() != __BindableFullObject__ && baseType.ToDisplayString() != __object__)
                             {
 #pragma warning disable RS1005 // ReportDiagnostic invoked with an unsupported DiagnosticDescriptor
-                                context.ReportDiagnostic(Diagnostic.Create(
-                                    DiagnosticDescriptors.DuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError,
-                                        context.Symbol.Locations.FirstOrDefault(),
-                                         ImmutableDictionary.Create<string, string?>()
-                                            .Add(TypeNameKey, classSymbol.Name)
-                                            .Add(AttributeTypeNameKey, attributeName),
-                                            context.Symbol));
+                                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateDuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError<BindableObjectSourceGenerator>(__BindableObject__),
+                                                         context.Symbol.Locations.FirstOrDefault(),
+                                                         ImmutableDictionary.Create<string, string?>()
+                                                            .Add(TypeNameKey, classSymbol.Name)
+                                                            .Add(AttributeTypeNameKey, attributeName),
+                                                         context.Symbol));
 #pragma warning restore RS1005 // ReportDiagnostic invoked with an unsupported DiagnosticDescriptor
                             }
                         }

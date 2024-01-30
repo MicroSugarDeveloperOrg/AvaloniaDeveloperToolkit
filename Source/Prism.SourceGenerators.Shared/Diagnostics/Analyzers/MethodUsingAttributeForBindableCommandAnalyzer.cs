@@ -1,4 +1,6 @@
-﻿using Prism.SourceGenerators.Extensions;
+﻿using Prism.SourceGenerators.Generators;
+using SourceGeneratorToolkit.Diagnostics;
+using SourceGeneratorToolkit.Extensions;
 using static Prism.SourceGenerators.Helpers.CodeHelpers;
 
 namespace Prism.SourceGenerators.Diagnostics.Analyzers;
@@ -10,7 +12,7 @@ internal class MethodUsingAttributeForBindableCommandAnalyzer : DiagnosticAnalyz
 
     internal const string ArgumentCountNameKey = "TypeArguments";
 
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(DiagnosticDescriptors.InvalidBindableCommandMethodSignatureError);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(DiagnosticDescriptors.CreateInvalidBindableCommandMethodSignatureError<BindableCommandSourceGenerator>(__BindableCommand__));
 
     public override void Initialize(AnalysisContext context)
     {
@@ -32,13 +34,12 @@ internal class MethodUsingAttributeForBindableCommandAnalyzer : DiagnosticAnalyz
 
                 if (!methodSymbol.ReturnsVoid || methodSymbol.Parameters.Length > 1)
                 {
-                    context.ReportDiagnostic(Diagnostic.Create(
-                            DiagnosticDescriptors.InvalidBindableCommandMethodSignatureError,
-                            context.Symbol.Locations.FirstOrDefault(),
-                            ImmutableDictionary.Create<string, string?>()
-                                        .Add(MethodNameKey, methodSymbol.Name)
-                                        .Add(ArgumentCountNameKey, methodSymbol.TypeArguments.Length.ToString()),
-                            context.Symbol));
+                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateInvalidBindableCommandMethodSignatureError<BindableCommandSourceGenerator>(__BindableCommand__),
+                                             context.Symbol.Locations.FirstOrDefault(),
+                                             ImmutableDictionary.Create<string, string?>()
+                                                         .Add(MethodNameKey, methodSymbol.Name)
+                                                         .Add(ArgumentCountNameKey, methodSymbol.TypeArguments.Length.ToString()),
+                                             context.Symbol));
                 }
 
             }, SymbolKind.Method);

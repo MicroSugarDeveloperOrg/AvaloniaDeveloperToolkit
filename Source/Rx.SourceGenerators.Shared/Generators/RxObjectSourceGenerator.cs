@@ -51,7 +51,7 @@ public sealed class RxObjectSourceGenerator : ISourceGenerator
 
             builder.AppendUsePropertySystemNameSpace();
             builder.AppendBaseType(__RxObject__);
-            context.AddSource($"{classSymbol.Name}_{__RxObjectAttributeEmbeddedResourceName__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));
+            context.AddSource($"{classSymbol.Name}_{__RxObject__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));
         }
 
         map.Clear();

@@ -6,8 +6,6 @@ internal class CodeHelpers
     public const string __PrismCommandsHeader__ = "Prism.Commands";
     public const string __PrismIocHeader__ = "Prism.Ioc";
 
-    public const string __EmbeddedResourcesHeader__ = "Prism.SourceGenerators.EmbeddedResources";
-
     public const string __BindableObjectAttributeEmbeddedResourceName__ = "BindableObjectAttribute";
     public const string __BindableObjectFullAttribute__ = $"{__PrismMvvmHeader__}.{__BindableObjectAttributeEmbeddedResourceName__}";
 
@@ -26,10 +24,7 @@ internal class CodeHelpers
     public const string __BindableCommand__ = "BindableCommand";
     public const string __BindableCommandFull__ = $"{__PrismCommandsHeader__}.{__BindableCommand__}";
 
-    public const string __CSharpFileExtension__ = "cs";
     public const string __GeneratorCSharpFileHeader__ = "_Prism_";
-    public const string __GeneratorCSharpFileExtension__ = $"g.{__CSharpFileExtension__}";
 
-    public const string __object__ = "object";
 
 }

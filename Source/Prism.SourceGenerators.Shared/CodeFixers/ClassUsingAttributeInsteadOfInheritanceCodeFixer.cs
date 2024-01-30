@@ -31,6 +31,11 @@ public sealed class ClassUsingAttributeInsteadOfInheritanceCodeFixer : CodeFixPr
         }
     }
 
+    public override FixAllProvider? GetFixAllProvider()
+    {
+        return base.GetFixAllProvider();
+    }
+
     private static Task<Document> RemoveAttribute(Document document, SyntaxNode root, ClassDeclarationSyntax classDeclaration, string attributeTypeName)
     {
         SyntaxGenerator generator = SyntaxGenerator.GetGenerator(document);

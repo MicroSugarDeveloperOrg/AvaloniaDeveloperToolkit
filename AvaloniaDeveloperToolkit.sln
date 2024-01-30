@@ -105,6 +105,7 @@ Global
 		Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems*{3ee726e1-514a-4da2-8dde-6cc7d2af507e}*SharedItemsImports = 5
 		Source\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems*{3ee726e1-514a-4da2-8dde-6cc7d2af507e}*SharedItemsImports = 5
 		Source\Prism.SourceGenerators.Shared\Prism.SourceGenerators.Shared.projitems*{6f59be87-96db-47d8-8d05-493c5c0d2f6a}*SharedItemsImports = 5
+		Source\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems*{6f59be87-96db-47d8-8d05-493c5c0d2f6a}*SharedItemsImports = 5
 		Source\Prism.SourceGenerators.Shared\Prism.SourceGenerators.Shared.projitems*{737f7c0a-e6f9-4c91-a703-4281b048a1a4}*SharedItemsImports = 13
 		Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems*{dd89585d-923d-4c24-9a45-80e77a0a07f4}*SharedItemsImports = 13
 	EndGlobalSection

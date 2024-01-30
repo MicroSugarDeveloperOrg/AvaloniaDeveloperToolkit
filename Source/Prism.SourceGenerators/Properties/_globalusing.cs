@@ -18,3 +18,4 @@ global using System.Linq;
 global using System.Reflection;
 global using System.Text;
 global using System.Threading.Tasks;
+global using Microsoft.CodeAnalysis.Operations;

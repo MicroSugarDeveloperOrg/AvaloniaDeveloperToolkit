@@ -1,6 +1,8 @@
-﻿using Microsoft.CodeAnalysis.Operations;
-using Prism.SourceGenerators.Extensions;
+﻿using Prism.SourceGenerators.Generators;
 using Prism.SourceGenerators.Helpers;
+using SourceGeneratorToolkit.Diagnostics;
+using SourceGeneratorToolkit.Extensions;
+using static Prism.SourceGenerators.Helpers.CodeHelpers;
 
 namespace Prism.SourceGenerators.Diagnostics.Analyzers;
 
@@ -11,7 +13,7 @@ public sealed class FieldUsingAttributeForBindablePropertyAnalyzer : DiagnosticA
 
     internal const string PropertyNameKey = "PropertyName";
 
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(DiagnosticDescriptors.BindablePropertyNameCollisionError);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(DiagnosticDescriptors.CreateBindablePropertyNameCollisionError<BindablePropertySourceGenerator>(__BindableProperty__));
 
     public override void Initialize(AnalysisContext context)
     {
@@ -20,7 +22,7 @@ public sealed class FieldUsingAttributeForBindablePropertyAnalyzer : DiagnosticA
 
         context.RegisterCompilationStartAction(static context =>
         {
-            if (context.Compilation.GetTypeByMetadataName(CodeHelpers.__BindablePropertyFullAttribute__) is not INamedTypeSymbol bindablePropertySymbol)
+            if (context.Compilation.GetTypeByMetadataName(__BindablePropertyFullAttribute__) is not INamedTypeSymbol bindablePropertySymbol)
                 return;
 
             context.RegisterOperationAction(context =>
@@ -39,20 +41,18 @@ public sealed class FieldUsingAttributeForBindablePropertyAnalyzer : DiagnosticA
 
                 foreach (AttributeData attribute in fieldSymbol.GetAttributes())
                 {
-                    if (attribute.AttributeClass is { Name: CodeHelpers.__BindablePropertyAttributeEmbeddedResourceName__ } attributeClass &&
+                    if (attribute.AttributeClass is { Name: __BindablePropertyAttributeEmbeddedResourceName__ } attributeClass &&
                         SymbolEqualityComparer.Default.Equals(attributeClass, bindablePropertySymbol))
                     {
                         var propertyName = fieldSymbol.CreateGeneratedPropertyName();
                         if (fieldSymbol.Name == propertyName)
                         {
-                            context.ReportDiagnostic(Diagnostic.Create(
-                                    DiagnosticDescriptors.BindablePropertyNameCollisionError,
-                                    context.Operation.Syntax.GetLocation(),
-                                    ImmutableDictionary.Create<string, string?>()
-                                        .Add(FieldNameKey, fieldSymbol.Name)
-                                        .Add(PropertyNameKey, propertyName),
-                                    fieldSymbol));
-
+                            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateBindablePropertyNameCollisionError<BindablePropertySourceGenerator>(__BindableProperty__),
+                                                     context.Operation.Syntax.GetLocation(),
+                                                     ImmutableDictionary.Create<string, string?>()
+                                                         .Add(FieldNameKey, fieldSymbol.Name)
+                                                         .Add(PropertyNameKey, propertyName),
+                                                     fieldSymbol));
                             return;
                         }
                     }

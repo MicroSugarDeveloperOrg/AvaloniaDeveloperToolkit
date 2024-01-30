@@ -2,6 +2,12 @@
 
 internal static class CodeBuilderExtensions
 {
+    public static CodeBuilder AppendUseNameSpace(this CodeBuilder builder, string useNameSpace)
+    {
+        var bRet = builder.AppendUseNameSpace(useNameSpace);
+        return builder;
+    }
+
     public static CodeBuilder AppendBaseType(this CodeBuilder builder, string baseType)
     {
         var bRet = builder.AppendBaseType(baseType);

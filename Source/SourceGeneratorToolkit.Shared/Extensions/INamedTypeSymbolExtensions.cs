@@ -1,4 +1,4 @@
-﻿namespace Prism.SourceGenerators.Extensions;
+﻿namespace SourceGeneratorToolkit.Extensions;
 
 internal static class INamedTypeSymbolExtensions
 {

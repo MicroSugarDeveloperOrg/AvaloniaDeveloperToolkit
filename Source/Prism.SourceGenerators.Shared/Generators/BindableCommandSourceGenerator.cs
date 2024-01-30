@@ -1,26 +1,27 @@
 ﻿using Prism.Commands;
 using Prism.SourceGenerators.Builder;
-using Prism.SourceGenerators.Diagnostics;
-using Prism.SourceGenerators.Extensions;
+using SourceGeneratorToolkit.Builders;
+using SourceGeneratorToolkit.Diagnostics;
+using SourceGeneratorToolkit.Extensions;
+using SourceGeneratorToolkit.SyntaxContexts;
 using static Prism.SourceGenerators.Helpers.CodeHelpers;
+using static SourceGeneratorToolkit.Helpers.CommonHelpers;
 
 namespace Prism.SourceGenerators.Generators;
 
 [Generator(LanguageNames.CSharp)]
-public class BindableCommandSourceGenerator : ISourceGenerator
+public class BindableCommandSourceGenerator : ISourceGenerator, ICodeProvider
 {
-    const string __bindableCommandAttributeEmbeddedResourceName__ = "BindableCommandAttribute";
-
     void ISourceGenerator.Initialize(GeneratorInitializationContext context)
     {
-        context.RegisterForPostInitialization(context => context.CreateSourceCodeFromEmbeddedResource(__bindableCommandAttributeEmbeddedResourceName__));
-        context.RegisterForSyntaxNotifications(() => new SyntaxContextReceiver());
+        context.RegisterForPostInitialization(context => context.CreateSourceCodeFromEmbeddedResource(__BindableCommandAttributeEmbeddedResourceName__, __GeneratorCSharpFileHeader__));
+        context.RegisterForSyntaxNotifications(() => new CommandSyntaxContextReceiver(__BindableCommandFullAttribute__));
     }
 
     void ISourceGenerator.Execute(GeneratorExecutionContext context)
     {
         var receiver = context.SyntaxContextReceiver;
-        if (receiver is not SyntaxContextReceiver syntaxContextReceiver)
+        if (receiver is not CommandSyntaxContextReceiver syntaxContextReceiver)
             return;
 
         var map = syntaxContextReceiver.GetMethods();
@@ -31,7 +32,7 @@ public class BindableCommandSourceGenerator : ISourceGenerator
         foreach (var mapMethod in map)
         {
             INamedTypeSymbol classSymbol = mapMethod.Key;
-            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.Name, classSymbol.ContainingNamespace.ToDisplayString());
+            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, this);
             builder.AppendUseCommandSystemNameSpace();
 
             ImmutableArray<IMethodSymbol> methodSymbols = mapMethod.Value;
@@ -43,9 +44,10 @@ public class BindableCommandSourceGenerator : ISourceGenerator
 
                 if (!methodSymbol.ReturnsVoid || methodSymbol.Parameters.Length > 1)
                 {
-                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.InvalidBindableCommandMethodSignatureError,
-                                            methodSymbol.Locations.FirstOrDefault(),
-                                            classSymbol));
+                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateInvalidBindableCommandMethodSignatureError<BindableCommandSourceGenerator>(__BindableCommand__),
+                                             methodSymbol.Locations.FirstOrDefault(),
+                                             classSymbol.Name,
+                                             methodSymbol.Name));
                     continue;
                 }
 
@@ -76,79 +78,62 @@ public class BindableCommandSourceGenerator : ISourceGenerator
                             if (canMethodSymbol.ReturnType.SpecialType != SpecialType.System_Boolean
                                 && canMethodSymbol.Parameters.Length != methodSymbol.Parameters.Length)
                             {
-                                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.InvalidCanExecuteMemberNameError,
-                                           methodSymbol.Locations.FirstOrDefault(),
-                                           classSymbol));
+                                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateInvalidCanExecuteMemberNameError<BindableCommandSourceGenerator>(__BindableCommand__),
+                                                         methodSymbol.Locations.FirstOrDefault(),
+                                                         $"{classSymbol.Name}.{canMethodSymbol.Name}",
+                                                         canMethodSymbol.ReturnType.Name));
                                 continue;
                             }
 
                             var canMethodParameterSymbol = canMethodSymbol.Parameters.FirstOrDefault();
                             if (canMethodParameterSymbol is not null && canMethodParameterSymbol.Type.GetFullyQualifiedName() != parameterType)
                             {
-                                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.InvalidCanExecuteMemberNameError,
-                                         methodSymbol.Locations.FirstOrDefault(),
-                                         classSymbol));
+                                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateInvalidCanExecuteMemberNameError<BindableCommandSourceGenerator>(__BindableCommand__),
+                                                         methodSymbol.Locations.FirstOrDefault(),
+                                                         $"{classSymbol.Name}.{canMethodSymbol.Name}",
+                                                         canMethodSymbol.ReturnType.Name));
                                 continue;
                             }
                         }
                     }
                 }
 
-                builder.AppendCommand(parameterType, methodSymbol.GetGeneratedMethodName(), canExcMethod);
+                builder.AppendCommand(parameterType, methodSymbol.ReturnType.ToDisplayString(), methodSymbol.GetGeneratedMethodName(), canExcMethod);
             }
 
             context.AddSource($"{classSymbol.Name}_{__BindableCommand__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));
         }
     }
 
-    class SyntaxContextReceiver : ISyntaxContextReceiver
+    string ICodeProvider.GetRaisePropertyString(string fieldName, string propertyName)
     {
-        Dictionary<INamedTypeSymbol, List<IMethodSymbol>> _mapMethods = [];
-
-        void ISyntaxContextReceiver.OnVisitSyntaxNode(GeneratorSyntaxContext context)
-        {
-            if (context.Node is not MethodDeclarationSyntax methodDeclarationSyntax || methodDeclarationSyntax.AttributeLists.Count <= 0)
-                return;
-
-            var methodSymbol = context.SemanticModel.GetDeclaredSymbol(methodDeclarationSyntax);
-            if (methodSymbol is null)
-                return;
-
-            //Debugger.Launch();
-            if (!methodSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == __BindableCommandFullAttribute__))
-                return;
-
-            var type = methodSymbol.ContainingType;
-            _mapMethods.TryGetValue(type, out var value);
-            if (value is null)
-            {
-                value = new List<IMethodSymbol>();
-                _mapMethods.Add(type, value);
-            }
-
-            value.Add(methodSymbol);
-        }
-
-        public ImmutableDictionary<INamedTypeSymbol, ImmutableArray<IMethodSymbol>> GetMethods()
-        {
-            Dictionary<INamedTypeSymbol, ImmutableArray<IMethodSymbol>> map = [];
-
-            foreach (var item in _mapMethods)
-                map.Add(item.Key, item.Value.ToImmutableArray());
-
-            var returnMap = map.ToImmutableDictionary(default);
-            map.Clear();
-            return returnMap;
-        }
-
-        public bool Clear()
-        {
-            foreach (var item in _mapMethods)
-                item.Value.Clear();
-
-            _mapMethods.Clear();
-            _mapMethods = null!;
-            return true;
-        }
+        throw new NotImplementedException();
     }
+
+    string ICodeProvider.CreateCommandString(string? argumentType, string? returnType, string methodName, string? canMethodName)
+    {
+        var arguments = string.IsNullOrWhiteSpace(canMethodName) ? $"{methodName}" : $"{methodName}, {canMethodName}";
+        var lowMethodName = $"_{methodName.FirstCharToLow()}Command";
+
+        string code;
+        if (string.IsNullOrWhiteSpace(argumentType))
+        {
+            code =
+            $"""
+                DelegateCommand? {lowMethodName};
+                public ICommand {methodName}Command =>  {lowMethodName} ??= new DelegateCommand({arguments});
+            """;
+        }
+        else
+        {
+            code =
+           $"""
+                DelegateCommand<{argumentType}>? {lowMethodName};
+                public ICommand {methodName}Command => {lowMethodName} ??= new DelegateCommand<{argumentType}>({arguments});
+            """;
+        }
+
+        return code;
+    }
+
 }
