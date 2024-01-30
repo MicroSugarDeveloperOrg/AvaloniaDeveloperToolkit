@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\ICodeProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\DiagnosticDescriptors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttributeDataExtensions.cs" />
