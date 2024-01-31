@@ -1,6 +1,6 @@
-using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Sample.Service;
 using Avalonia.Sample.ViewModels;
 using Avalonia.Sample.Views;
 using Prism.Ioc;
@@ -23,7 +23,7 @@ public partial class App : Prism.PrismApplicationBase
         AvaloniaObject shell = default!;
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            shell =  new MainWindow
+            shell = new MainWindow
             {
                 DataContext = new MainViewModel()
             };
@@ -44,14 +44,39 @@ public partial class App : Prism.PrismApplicationBase
         RegisterViewViewModel(containerRegistry);
         RegisterForNavigation(containerRegistry);
 
-        //containerRegistry.RegisterSingleton(,);
-        //containerRegistry.RegisterScoped
+        //containerRegistry.RegisterSingleton<TestService>();
+        //containerRegistry.RegisterMany<TestService>();
+        //containerRegistry.Register<,>
         //containerRegistry.Register
-        //containerRegistry.RegisterForNavigation()
+        //containerRegistry.RegisterForNavigation(,)
     }
 
+    [Singleton(typeof(ITestService), typeof(TestService))]
+    [Singleton(typeof(ITestService), typeof(TestService), Token = "Test1")]
+    [Singleton<TestService>]
+    [Singleton<ITestService, TestService>]
+    [Singleton<ITestService, TestService>(Token = "Test3")]
+
+    [Scoped(typeof(ITestService), typeof(TestService))]
+    [Scoped(typeof(ITestService), typeof(TestService), Token = "Test1")]
+    [Scoped<TestService>]
+    [Scoped<ITestService, TestService>]
+    [Scoped<ITestService, TestService>(Token = "Test3")]
+
+    [Transient(typeof(ITestService), typeof(TestService))]
+    [Transient(typeof(ITestService), typeof(TestService), Token = "Test1")]
+    [Transient<TestService>]
+    [Transient<ITestService, TestService>]
+    [Transient<ITestService, TestService>(Token = "Test3")]
+
+    [ManySingleton<TestService>(typeof(ITestService), typeof(ITestService2), Token = "Test5")]
+    [ManyScoped<TestService>(typeof(ITestService), typeof(ITestService2), Token = "Test6")]
+    [ManyTransient<TestService>(typeof(ITestService), typeof(ITestService2), Token = "Test7")]
     partial void RegisterViewViewModel(IContainerRegistry containerRegistry);
 
+    [Navigation<MainWindow>(Token = nameof(MainWindow))]
+    [Navigation<MainWindow, MainViewModel>(Token = nameof(MainWindow))]
+    [Navigation<MainView, MainViewModel>(Token = nameof(MainView))]
     partial void RegisterForNavigation(IContainerRegistry containerRegistry);
 
 }

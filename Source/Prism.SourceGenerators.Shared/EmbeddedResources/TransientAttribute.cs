@@ -1,4 +1,6 @@
-﻿namespace Prism.Ioc;
+﻿using System;
+
+namespace Prism.Ioc;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
 internal class TransientAttribute : InjectAttribute

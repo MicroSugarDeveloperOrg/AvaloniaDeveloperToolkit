@@ -10,4 +10,26 @@ internal static class IMethodSymbolExtensions
 
         return methodName;
     }
+
+    public static string? CreateParameter(this IMethodSymbol methodSymbol)
+    {
+        if (methodSymbol is null)
+            return default;
+
+        if (methodSymbol.Parameters.Length <= 0)
+            return default;
+
+        int i = 0;
+        StringBuilder builder = new();
+        foreach (var parameter in methodSymbol.Parameters)
+        {
+            if (i > 0)
+                builder.Append(", ");
+
+            builder.Append($"{parameter.Type.Name} {parameter.Name}");
+            i++;
+        }
+          
+        return builder.ToString();
+    }
 }

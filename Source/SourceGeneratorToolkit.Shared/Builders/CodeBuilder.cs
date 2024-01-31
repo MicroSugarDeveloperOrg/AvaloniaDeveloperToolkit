@@ -2,7 +2,7 @@
 
 internal class CodeBuilder : IDisposable
 {
-    private CodeBuilder(string nameSpace, string className, ICodeProvider? provider)
+    protected CodeBuilder(string nameSpace, string className, ICodeProvider? provider)
     {
         _className = className;
         _nameSpace = nameSpace;
@@ -12,15 +12,15 @@ internal class CodeBuilder : IDisposable
 
     ICodeProvider? _provider;
 
-    string _className;
-    string _nameSpace;
-    string? _baseTypeName;
-    string _commandString = string.Empty;
-    string _raisePropertyString = string.Empty;
-    List<string> _namespaces = [];
-    List<string> _interfaceNames = [];
-    Dictionary<string, (string type, string field)> _mapPropertyNames = [];
-    Dictionary<string, (string? argType, string? returnType, string? can)> _mapMethodNames = [];
+    protected string _className;
+    protected string _nameSpace;
+    protected string? _baseTypeName;
+    protected string _commandString = string.Empty;
+    protected string _raisePropertyString = string.Empty;
+    protected List<string> _namespaces = [];
+    protected List<string> _interfaceNames = [];
+    protected Dictionary<string, (string type, string field)> _mapPropertyNames = [];
+    protected Dictionary<string, (string? argType, string? returnType, string? can)> _mapCommandNames = [];
 
     public static CodeBuilder CreateBuilder(string nameSpace, string className,ICodeProvider? provider) => new CodeBuilder(nameSpace, className, provider);
 
@@ -71,14 +71,14 @@ internal class CodeBuilder : IDisposable
 
     public bool AppendCommand(string? argumentType, string? returnType, string methodName, string? canMethodName)
     {
-        if (_mapMethodNames.ContainsKey(methodName))
+        if (_mapCommandNames.ContainsKey(methodName))
             return true;
 
-        _mapMethodNames.Add(methodName, (argumentType, returnType, canMethodName));
+        _mapCommandNames.Add(methodName, (argumentType, returnType, canMethodName));
         return true;
     }
 
-    public string? Build()
+    public virtual string? Build()
     {
         if (string.IsNullOrWhiteSpace(_className))
             return default;
@@ -101,7 +101,7 @@ internal class CodeBuilder : IDisposable
         return code;
     }
 
-    public bool Clear()
+    public virtual bool Clear()
     {
         _namespaces.Clear();
         _namespaces = null!;
@@ -112,13 +112,13 @@ internal class CodeBuilder : IDisposable
         _mapPropertyNames.Clear();
         _mapPropertyNames = null!;
 
-        _mapMethodNames.Clear();
-        _mapMethodNames = null!;
+        _mapCommandNames.Clear();
+        _mapCommandNames = null!;
 
         return true;
     }
 
-    string BuildNameSpaces()
+    protected string BuildNameSpaces()
     {
         StringBuilder builder = new();
         foreach (var item in _namespaces)
@@ -127,9 +127,9 @@ internal class CodeBuilder : IDisposable
         return builder.ToString();
     }
 
-    string BuildClassName() => string.IsNullOrWhiteSpace(_baseTypeName) ? _className : $"{_className} : {_baseTypeName}";
+    protected string BuildClassName() => string.IsNullOrWhiteSpace(_baseTypeName) ? _className : $"{_className} : {_baseTypeName}";
 
-    string BuildProperties()
+    protected string BuildProperties()
     {
         StringBuilder builder = new();
         foreach (var item in _mapPropertyNames)
@@ -141,7 +141,7 @@ internal class CodeBuilder : IDisposable
         return builder.ToString();
     }
 
-    string? BuildProperty(string type, string fieldName, string propertyName)
+    protected string? BuildProperty(string type, string fieldName, string propertyName)
     {
         if (string.IsNullOrWhiteSpace(type) || string.IsNullOrWhiteSpace(fieldName) || string.IsNullOrWhiteSpace(propertyName))
             return default;
@@ -175,10 +175,10 @@ internal class CodeBuilder : IDisposable
         return code;
     }
 
-    string BuildCommands()
+    protected string BuildCommands()
     {
         StringBuilder builder = new();
-        foreach (var item in _mapMethodNames)
+        foreach (var item in _mapCommandNames)
         {
             builder.Append(BuildCommand(item.Value.argType, item.Value.returnType , item.Key, item.Value.can));
             builder.AppendLine();
@@ -187,7 +187,7 @@ internal class CodeBuilder : IDisposable
         return builder.ToString();
     }
 
-    string? BuildCommand(string? argumentType, string? returnType, string methodName, string? canMethodName)
+    protected string? BuildCommand(string? argumentType, string? returnType, string methodName, string? canMethodName)
     {
         if (string.IsNullOrWhiteSpace(methodName))
             return default;

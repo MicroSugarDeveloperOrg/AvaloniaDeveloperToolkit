@@ -1,4 +1,6 @@
-﻿namespace Prism.Ioc;
+﻿using System;
+
+namespace Prism.Ioc;
 
 #nullable enable
 
@@ -17,7 +19,7 @@ internal class InjectAttribute : Attribute
 
     public Type? From { get; init; }
     public Type To { get; init; }
-    public string? Token { get; init; } 
+    public string? Token { get; init; }
 }
 
 #nullable disable

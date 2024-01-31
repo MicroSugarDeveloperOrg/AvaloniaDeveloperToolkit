@@ -69,7 +69,6 @@ internal class DiagnosticDescriptors
                    helpLinkUri: "");
     }
 
-
     public static DiagnosticDescriptor CreateInheritFromBindableObjectInsteadOfUsingBindableObjectAttributeWarning<TSourceGenerator>(string objectName) where TSourceGenerator : ISourceGenerator
     {
         return new DiagnosticDescriptor(
@@ -85,6 +84,18 @@ internal class DiagnosticDescriptors
                    helpLinkUri: "");
     }
 
+    public static DiagnosticDescriptor CreateInvalidIocPartialMethodSignatureError<TSourceGenerator>(string iocName, string containerName) where TSourceGenerator : ISourceGenerator
+    {
+        return new DiagnosticDescriptor(
+                   id: "MVVMSG0021",
+                   title: $"Invalid {iocName} method signature",
+                   messageFormat: $"The Method {{0}}.{{1}} is using the [{iocName}] attribute while having no type {containerName} parameter, and it's parameters should include the type {containerName}",
+                   category: typeof(TSourceGenerator).FullName,
+                   defaultSeverity: DiagnosticSeverity.Error,
+                   isEnabledByDefault: true,
+                   description: $"Method's parameters must include the type {containerName}" ,
+                   helpLinkUri: "");
+    }
 
 
 

@@ -11,7 +11,11 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilderXExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilderX.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\ICodeProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\ICodeXProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\InjectType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\DiagnosticDescriptors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\SuppressionDescriptors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttributeDataExtensions.cs" />
@@ -26,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringFormatExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CommonHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\CommandSyntaxContextReceiver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\InjectSyntaxContextReceiver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\ObjectSyntaxContextReceiver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\PropertySyntaxContextReceiver.cs" />
   </ItemGroup>
