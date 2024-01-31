@@ -29,8 +29,8 @@
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
-    <PackageVersion Include="Prism.Avalonia" Version="8.1.97.11000" />
-    <PackageVersion Include="Prism.DryIoc.Avalonia" Version="8.1.97.11000" />
+    <PackageVersion Include="Prism.Avalonia" Version="8.1.97.11072" />
+    <PackageVersion Include="Prism.DryIoc.Avalonia" Version="8.1.97.11072" />
     <PackageVersion Include="XamlNameReferenceGenerator" Version="1.6.1" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.5" />
   </ItemGroup>

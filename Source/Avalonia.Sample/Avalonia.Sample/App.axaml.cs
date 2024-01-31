@@ -3,19 +3,16 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Sample.Service;
 using Avalonia.Sample.ViewModels;
 using Avalonia.Sample.Views;
+using Prism.DryIoc;
 using Prism.Ioc;
 
 namespace Avalonia.Sample;
-public partial class App : Prism.PrismApplicationBase
+public partial class App : PrismApplication
 {
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
-    }
-
-    protected override IContainerExtension CreateContainerExtension()
-    {
-        throw new NotImplementedException();
+        base.Initialize();  
     }
 
     protected override AvaloniaObject CreateShell()
