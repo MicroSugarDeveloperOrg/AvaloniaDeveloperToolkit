@@ -2,8 +2,8 @@
 
 namespace Prism.Ioc;
 
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
-internal class SingletonAttribute<T> : SingletonAttribute
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
+internal sealed class SingletonAttribute<T> : SingletonAttribute
 {
     public SingletonAttribute() 
         : base(typeof(T))

@@ -97,6 +97,18 @@ internal class DiagnosticDescriptors
                    helpLinkUri: "");
     }
 
+    public static DiagnosticDescriptor CreateInvalidRegistrarIocError<TSourceGenerator>(string registrar) where TSourceGenerator : ISourceGenerator
+    {
+        return new DiagnosticDescriptor(
+                   id: "MVVMSG0031",
+                   title: $"Invalid {registrar} class signature",
+                   messageFormat: $"The class {{0}} is using the [{{1}}] attribute while having no {registrar} attribute, please add {registrar}Attribute for the register enter!",
+                   category: typeof(TSourceGenerator).FullName,
+                   defaultSeverity: DiagnosticSeverity.Error,
+                   isEnabledByDefault: true,
+                   description: $"Register must work with {registrar}Attribute, if you not set the {registrar}Attribute, it will can't generator the source file!",
+                   helpLinkUri: "");
+    }
 
 
 

@@ -4,7 +4,7 @@ namespace Prism.Ioc;
 
 #nullable enable
 
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
 internal class SingletonAttribute : InjectAttribute
 {
     public SingletonAttribute(Type to) 

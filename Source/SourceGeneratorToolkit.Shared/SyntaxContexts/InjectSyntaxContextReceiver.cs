@@ -1,6 +1,6 @@
 ﻿namespace SourceGeneratorToolkit.SyntaxContexts;
 
-internal sealed class RecordMethodSyntax(IMethodSymbol _methodSymbol, MethodDeclarationSyntax _methodSyntax) : IEqualityComparer<RecordMethodSyntax>
+internal sealed class RecordInjectMethod(IMethodSymbol _methodSymbol, MethodDeclarationSyntax _methodSyntax) : IEqualityComparer<RecordInjectMethod>
 {
     public string Name => _methodSymbol.ToDisplayString();
 
@@ -10,11 +10,11 @@ internal sealed class RecordMethodSyntax(IMethodSymbol _methodSymbol, MethodDecl
 
     public MethodDeclarationSyntax MethodSyntax => _methodSyntax;
 
-    public static bool operator ==(RecordMethodSyntax left, RecordMethodSyntax right) => left.Equals(right);
+    public static bool operator ==(RecordInjectMethod left, RecordInjectMethod right) => left.Equals(right);
 
-    public static bool operator !=(RecordMethodSyntax left, RecordMethodSyntax right) => !left.Equals(right);
+    public static bool operator !=(RecordInjectMethod left, RecordInjectMethod right) => !left.Equals(right);
 
-    public bool Equals(RecordMethodSyntax x, RecordMethodSyntax y)
+    public bool Equals(RecordInjectMethod x, RecordInjectMethod y)
     {
         if (x is null || y is null)
             return false;
@@ -28,7 +28,7 @@ internal sealed class RecordMethodSyntax(IMethodSymbol _methodSymbol, MethodDecl
         return x.Name == y.Name;
     }
 
-    public int GetHashCode(RecordMethodSyntax obj)
+    public int GetHashCode(RecordInjectMethod obj)
     {
         if (obj is null)
             return 0;
@@ -50,7 +50,7 @@ internal sealed class InjectSyntaxContextReceiver : ISyntaxContextReceiver
 
     ImmutableArray<string> _injectStrings;
 
-    Dictionary<INamedTypeSymbol, Dictionary<string, RecordMethodSyntax>> _mapInjects = [];
+    Dictionary<INamedTypeSymbol, Dictionary<string, RecordInjectMethod>> _mapInjects = [];
 
     void ISyntaxContextReceiver.OnVisitSyntaxNode(GeneratorSyntaxContext context)
     {
@@ -85,16 +85,16 @@ internal sealed class InjectSyntaxContextReceiver : ISyntaxContextReceiver
             _mapInjects[methodSymbol.ContainingType] = mapMethods;
         }
 
-        RecordMethodSyntax recordMethod = new(methodSymbol, methodDeclarationSyntax)
+        RecordInjectMethod recordMethod = new(methodSymbol, methodDeclarationSyntax)
         {
             AttributeDatas = attributesDatas.ToImmutableArray(),
         };
         mapMethods[methodSymbol.ToDisplayString()] = recordMethod;
     }
 
-    public ImmutableDictionary<INamedTypeSymbol, ImmutableDictionary<string, RecordMethodSyntax>> GetInjects()
+    public ImmutableDictionary<INamedTypeSymbol, ImmutableDictionary<string, RecordInjectMethod>> GetInjects()
     {
-        Dictionary<INamedTypeSymbol, ImmutableDictionary<string, RecordMethodSyntax>> mapInjects = [];
+        Dictionary<INamedTypeSymbol, ImmutableDictionary<string, RecordInjectMethod>> mapInjects = [];
 
         foreach (var mapInjectKeyValue in _mapInjects)
             mapInjects[mapInjectKeyValue.Key] = mapInjectKeyValue.Value.ToImmutableDictionary();

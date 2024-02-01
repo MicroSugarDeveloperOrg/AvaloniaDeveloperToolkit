@@ -83,9 +83,9 @@ internal class CodeBuilder : IDisposable
         if (string.IsNullOrWhiteSpace(_className))
             return default;
 
-        //先写NameSpace
-        var code =
-            $"""
+        if (_mapPropertyNames.Count > 0 && _mapCommandNames.Count > 0)
+        {
+            return  $"""
             {BuildNameSpaces()}
             namespace {_nameSpace};
 
@@ -97,8 +97,49 @@ internal class CodeBuilder : IDisposable
             {'}'}
             #nullable disable
             """;
+        }
 
-        return code;
+        if (_mapPropertyNames.Count > 0)
+        {
+            return $"""
+            {BuildNameSpaces()}
+            namespace {_nameSpace};
+
+            #nullable enable
+            partial class {BuildClassName()}
+            {'{'} 
+            {BuildProperties()} 
+            {'}'}
+            #nullable disable
+            """;
+        }
+
+        if (_mapCommandNames.Count > 0)
+        {
+            return $"""
+            {BuildNameSpaces()}
+            namespace {_nameSpace};
+
+            #nullable enable
+            partial class {BuildClassName()}
+            {'{'} 
+            {BuildProperties()} 
+            {'}'}
+            #nullable disable
+            """;
+        }
+
+        return $"""
+            {BuildNameSpaces()}
+            namespace {_nameSpace};
+
+            #nullable enable
+            partial class {BuildClassName()}
+            {'{'} 
+
+            {'}'}
+            #nullable disable
+            """;
     }
 
     public virtual bool Clear()

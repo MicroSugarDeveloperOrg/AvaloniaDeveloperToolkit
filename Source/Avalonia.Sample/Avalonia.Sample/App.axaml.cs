@@ -7,6 +7,8 @@ using Prism.DryIoc;
 using Prism.Ioc;
 
 namespace Avalonia.Sample;
+
+[Registrar(nameof(RegisterServices))]
 public partial class App : PrismApplication
 {
     public override void Initialize()
@@ -75,5 +77,7 @@ public partial class App : PrismApplication
     [Navigation<MainWindow, MainViewModel>(Token = nameof(MainWindow))]
     [Navigation<MainView, MainViewModel>(Token = nameof(MainView))]
     partial void RegisterForNavigation(IContainerRegistry containerRegistry);
+
+    partial void RegisterServices(IContainerRegistry containerRegistry);
 
 }

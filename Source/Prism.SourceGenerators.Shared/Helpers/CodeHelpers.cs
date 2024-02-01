@@ -75,6 +75,8 @@ internal class CodeHelpers
 
     public const string __Registration__ = "Registration";
 
+    public const string __Registrar__ = "Registrar";
+
     public const string __AttributeConstructorParameter_From__ = "from";
     public const string __AttributeConstructorParameter_To__ = "to";
     public const string __AttributeConstructorNamedArgument_From__ = "From";

@@ -2,7 +2,7 @@
 
 namespace Prism.Ioc;
 
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
 internal class TransientAttribute : InjectAttribute
 {
     public TransientAttribute(Type to)

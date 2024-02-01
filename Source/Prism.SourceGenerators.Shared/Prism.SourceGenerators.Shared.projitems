@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ManyTransientAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\NavigationAttributeT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\NavigationAttributeTT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\RegistrarAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ScopedAttributeTT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ScopedAttributeT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ScopedAttribute.cs" />
@@ -36,7 +37,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\Analyzers\FieldUsingAttributeForBindablePropertyAnalyzer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\Analyzers\MethodUsingAttributeForBindableCommandAnalyzer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Diagnostics\Suppressors\BindablePropertyAttributeWithPropertyTargetDiagnosticSuppressor.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\RegistrarAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Generators\InjectSourceGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\RegistrarSourceGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CodeHelpers.cs" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\BindableCommandAttribute.cs" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\BindableObjectAttribute.cs" />

@@ -94,9 +94,9 @@ internal class CodeBuilderX : CodeBuilder
         if (string.IsNullOrWhiteSpace(_className))
             return default;
 
-        //先写NameSpace
-        var code =
-            $"""
+        if (_mapPropertyNames.Count > 0 && _mapCommandNames.Count > 0 && _mapMethods.Count > 0)
+        {
+            return $"""
             {BuildNameSpaces()}
             namespace {_nameSpace};
 
@@ -109,8 +109,56 @@ internal class CodeBuilderX : CodeBuilder
             {'}'}
             #nullable disable
             """;
+        }
 
-        return code;
+        if (_mapPropertyNames.Count > 0 && _mapMethods.Count > 0)
+        {
+            return $"""
+            {BuildNameSpaces()}
+            namespace {_nameSpace};
+
+            #nullable enable
+            partial class {BuildClassName()}
+            {'{'} 
+            {BuildProperties()} 
+            {BuildMethods()}
+            {'}'}
+            #nullable disable
+            """;
+        }
+
+        if (_mapCommandNames.Count > 0 && _mapMethods.Count > 0)
+        {
+            return $"""
+            {BuildNameSpaces()}
+            namespace {_nameSpace};
+
+            #nullable enable
+            partial class {BuildClassName()}
+            {'{'} 
+            {BuildProperties()} 
+            {BuildMethods()}
+            {'}'}
+            #nullable disable
+            """;
+        }
+
+        if (_mapMethods.Count > 0)
+        {
+            return $"""
+            {BuildNameSpaces()}
+            namespace {_nameSpace};
+
+            #nullable enable
+            partial class {BuildClassName()}
+            {'{'} 
+            {BuildMethods()}
+            {'}'}
+            #nullable disable
+            """;
+        }
+
+        return base.Build();
     }
 
     protected string BuildMethods()

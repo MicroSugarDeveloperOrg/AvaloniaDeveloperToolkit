@@ -10,7 +10,7 @@ using static SourceGeneratorToolkit.Helpers.CommonHelpers;
 namespace Prism.SourceGenerators.Generators;
 
 [Generator(LanguageNames.CSharp)]
-internal class InjectSourceGenerator : ISourceGenerator, ICodeXProvider
+public class InjectSourceGenerator : ISourceGenerator, ICodeXProvider
 {
     void ISourceGenerator.Initialize(GeneratorInitializationContext context)
     {

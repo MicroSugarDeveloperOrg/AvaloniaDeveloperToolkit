@@ -2,8 +2,8 @@
 
 namespace Prism.Ioc;
 
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
-internal class ScopedAttribute<T> : ScopedAttribute
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
+internal sealed class ScopedAttribute<T> : ScopedAttribute
 {
     public ScopedAttribute()
         : base(typeof(T))

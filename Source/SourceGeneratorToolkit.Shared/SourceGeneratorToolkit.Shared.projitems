@@ -33,5 +33,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\InjectSyntaxContextReceiver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\ObjectSyntaxContextReceiver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\PropertySyntaxContextReceiver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxContexts\RegistrarSyntaxContextReceiver.cs" />
   </ItemGroup>
 </Project>
