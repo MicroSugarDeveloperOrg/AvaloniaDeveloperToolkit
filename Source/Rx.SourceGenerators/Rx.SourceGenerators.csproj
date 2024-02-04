@@ -6,6 +6,8 @@
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 	</PropertyGroup>
 
+	<Import Project="$(BuildToolsDirectory)Directory.Packages.targets" />
+
 	<!-- Necessary polyfills -->
 	<PropertyGroup>
 		<PolySharpIncludeGeneratedTypes>
