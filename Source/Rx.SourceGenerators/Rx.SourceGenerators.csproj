@@ -23,17 +23,15 @@
 		</PolySharpIncludeGeneratedTypes>
 	</PropertyGroup>
 	
-	<Import Project="..\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems" Label="Shared" />
-	<Import Project="..\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems" Label="Shared" />
-
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" >
-			<PrivateAssets>all</PrivateAssets> 
-		</PackageReference>
-		<PackageReference Include="PolySharp">
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="all" Pack="false"/>
+		<PackageReference Include="PolySharp" Pack="false">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>build; analyzers</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+
+	<Import Project="..\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems" Label="Shared" />
+	<Import Project="..\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems" Label="Shared" />
 
 </Project>
