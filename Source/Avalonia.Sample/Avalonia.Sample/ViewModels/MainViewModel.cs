@@ -4,7 +4,7 @@ using Prism.Mvvm;
 namespace Avalonia.Sample.ViewModels;
 
 [BindableObject]
-public partial class MainViewModel
+public partial class MainViewModel : TestUserControlViewModel
 {
     public MainViewModel()
     {

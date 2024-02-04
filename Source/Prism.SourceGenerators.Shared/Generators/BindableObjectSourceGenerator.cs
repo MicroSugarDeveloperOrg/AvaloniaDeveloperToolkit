@@ -29,27 +29,19 @@ public class BindableObjectSourceGenerator : ISourceGenerator
             if (classSymbol is null)
                 continue;
 
-            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, default!);
-            var baseType = classSymbol.BaseType;
+            if (classSymbol.IsBaseOf(__BindableFullObject__))
+                continue;
 
-            if (baseType is not null)
+            if (classSymbol.BaseType?.ToDisplayString() != __object__) // all class is base of object
             {
-                if (baseType.ToDisplayString() != __BindableFullObject__)
-                {
-                    if (baseType.ToDisplayString() != __object__)
-                    {
-                        context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateDuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError<BindableObjectSourceGenerator>(__BindableObject__),
-                                                 classSymbol.Locations.FirstOrDefault(),
-                                                 classSymbol.Name));
-                    }
-                }
-                else
-                    continue;
+                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateDuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError<BindableObjectSourceGenerator>(__BindableObject__),
+                                             classSymbol.Locations.FirstOrDefault(),
+                                             classSymbol.BaseType?.Name));
             }
 
+            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, default!);
             builder.AppendUsePropertySystemNameSpace();
             builder.AppendBaseType(__BindableObject__);
-
             context.AddSource($"{classSymbol.Name}_{__BindableObject__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));
         }
 

@@ -30,25 +30,17 @@ public sealed class RxObjectSourceGenerator : ISourceGenerator
             if (classSymbol is null)
                 continue;
 
-            //Debugger.Launch();
-            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, default!);
-            var baseType = classSymbol.BaseType;
+            if (classSymbol.IsBaseOf(__RxObjectFull__))
+                continue;
 
-            if (baseType is not null)
+            if (classSymbol.BaseType?.ToDisplayString() != __object__)
             {
-                if (baseType.ToDisplayString() != __RxObjectFull__)
-                {
-                    if (baseType.ToDisplayString() != __object__)
-                    {
-                        context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateDuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError<RxObjectSourceGenerator>(__RxObject__),
-                                                 classSymbol.Locations.FirstOrDefault(),
-                                                 baseType.Name));
-                    }
-                }
-                else
-                    continue;
+                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.CreateDuplicateINotifyPropertyChangedInterfaceForBindableObjectAttributeError<RxObjectSourceGenerator>(__RxObject__),
+                                         classSymbol.Locations.FirstOrDefault(),
+                                         classSymbol.BaseType?.Name));
             }
 
+            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, default!);
             builder.AppendUsePropertySystemNameSpace();
             builder.AppendBaseType(__RxObject__);
             context.AddSource($"{classSymbol.Name}_{__RxObject__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));

@@ -19,4 +19,26 @@ internal static class INamedTypeSymbolExtensions
                 yield return memberSymbol;
         }
     }
+
+    public static bool IsBaseOf(this INamedTypeSymbol classSymbol, string baseType)
+    {
+        if (classSymbol is null || string.IsNullOrWhiteSpace(baseType))
+            return false;
+
+        var classSymbolInner = classSymbol;
+
+        for (; ; )
+        {
+            var baseSymbol = classSymbolInner.BaseType;
+            if (baseSymbol is null)
+                break;
+
+            if (baseSymbol.ToDisplayString() == baseType)
+                return true;
+
+            classSymbolInner = baseSymbol;
+        }
+
+        return false;
+    }
 }

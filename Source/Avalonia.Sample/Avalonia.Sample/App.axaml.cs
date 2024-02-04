@@ -40,14 +40,9 @@ public partial class App : PrismApplication
 
     protected override void RegisterTypes(IContainerRegistry containerRegistry)
     {
+        RegisterServices(containerRegistry);
         RegisterViewViewModel(containerRegistry);
         RegisterForNavigation(containerRegistry);
-
-        //containerRegistry.RegisterSingleton<TestService>();
-        //containerRegistry.RegisterMany<TestService>();
-        //containerRegistry.Register<,>
-        //containerRegistry.Register
-        //containerRegistry.RegisterForNavigation(,)
     }
 
     [Singleton(typeof(ITestService), typeof(TestService))]
