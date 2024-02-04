@@ -4,7 +4,6 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-		<AssemblyName>PrismToolkit.SourceGenerators</AssemblyName>
 	</PropertyGroup>
 
 	<Import Project="$(BuildToolsDirectory)Directory.Packages.targets" />
@@ -27,15 +26,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="all" Pack="false" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all" Pack="false" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="all" Pack="false"/>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all" Pack="false"/>
 		<PackageReference Include="PolySharp" Pack="false">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>build; analyzers</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
 
-	<Import Project="..\Prism.SourceGenerators.Shared\Prism.SourceGenerators.Shared.projitems" Label="Shared" />
+	<Import Project="..\PrismToolkit.SourceGenerators.Shared\PrismToolkit.SourceGenerators.Shared.projitems" Label="Shared" />
 	<Import Project="..\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems" Label="Shared" />
 
 </Project>

@@ -123,7 +123,7 @@ internal class CodeBuilder : IDisposable
             #nullable enable
             partial class {BuildClassName()}
             {'{'} 
-            {BuildProperties()} 
+            {BuildCommands()} 
             {'}'}
             #nullable disable
             """;
@@ -219,10 +219,20 @@ internal class CodeBuilder : IDisposable
     protected string BuildCommands()
     {
         StringBuilder builder = new();
+        int i = 0;
+
         foreach (var item in _mapCommandNames)
         {
+            if (string.IsNullOrWhiteSpace(item.Key))
+                continue;
+
+            if (i > 0)
+            {
+                builder.AppendLine();
+                builder.AppendLine();
+            }
             builder.Append(BuildCommand(item.Value.argType, item.Value.returnType , item.Key, item.Value.can));
-            builder.AppendLine();
+            i++;
         }
 
         return builder.ToString();
@@ -232,9 +242,6 @@ internal class CodeBuilder : IDisposable
     {
         if (string.IsNullOrWhiteSpace(methodName))
             return default;
-
-        //var commandString = "Command";
-        //var arguments = string.IsNullOrWhiteSpace(canMethodName) ? $"{methodName}" : $"{methodName}, {canMethodName}";
 
         return _provider?.CreateCommandString(argumentType, returnType, methodName, canMethodName);
     }

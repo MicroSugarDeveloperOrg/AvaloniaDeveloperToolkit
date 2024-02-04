@@ -28,7 +28,6 @@ public class BindableCommandSourceGenerator : ISourceGenerator, ICodeProvider
         if (map.Count <= 0)
             return;
 
-        //Debugger.Launch();
         foreach (var mapMethod in map)
         {
             INamedTypeSymbol classSymbol = mapMethod.Key;

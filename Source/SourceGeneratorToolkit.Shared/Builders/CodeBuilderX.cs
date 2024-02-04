@@ -136,7 +136,7 @@ internal class CodeBuilderX : CodeBuilder
             #nullable enable
             partial class {BuildClassName()}
             {'{'} 
-            {BuildProperties()} 
+            {BuildCommands()} 
             {BuildMethods()}
             {'}'}
             #nullable disable

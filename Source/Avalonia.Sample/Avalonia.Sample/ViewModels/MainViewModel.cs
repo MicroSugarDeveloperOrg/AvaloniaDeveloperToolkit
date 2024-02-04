@@ -33,4 +33,10 @@ public partial class MainViewModel : TestUserControlViewModel
         return true;
     }
 
+    [BindableCommand]
+    void Test1()
+    {
+
+    }
+
 }
