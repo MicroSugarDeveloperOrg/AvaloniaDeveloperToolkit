@@ -70,7 +70,7 @@ public class InjectSourceGenerator : ISourceGenerator, ICodeXProvider
             var classSymbol = mapClass.Key;
             var mapMethods = mapClass.Value;
 
-            using CodeBuilderX builder = CodeBuilderX.CreateBuilderX(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, this);
+            using CodeBuilderX builder = CodeBuilderX.CreateBuilderX(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, classSymbol.IsAbstract, this);
             builder.AppendUseIocSystemNameSpace();
 
             foreach (var mapMethod in mapMethods)
@@ -221,5 +221,15 @@ public class InjectSourceGenerator : ISourceGenerator, ICodeXProvider
     string ICodeProvider.CreateCommandString(string? argumentType, string? returnType, string methodName, string? canMethodName)
     {
         throw new NotImplementedException();
+    }
+
+    string ICodeXProvider.CreateMethodString(string? argumentType, string? returnType, string methodName)
+    {
+        return default!;
+    }
+
+    string ICodeProvider.CreateClassBodyString()
+    {
+        return default!;
     }
 }

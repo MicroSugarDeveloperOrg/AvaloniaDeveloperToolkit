@@ -47,8 +47,8 @@ internal class MethodElement(string methodName, string containerName, InjectType
 
 internal class CodeBuilderX : CodeBuilder
 {
-    protected CodeBuilderX(string nameSpace, string className, ICodeXProvider? provider)
-        : base(nameSpace, className, provider)
+    protected CodeBuilderX(string nameSpace, string className, bool isAbstract, ICodeXProvider? provider)
+        : base(nameSpace, className, isAbstract, provider)
     {
         _provider = provider;
     }
@@ -58,7 +58,8 @@ internal class CodeBuilderX : CodeBuilder
     protected Dictionary<string, (string? argument, string? returnType)> _mapMethods = new();
     protected Dictionary<string, List<MethodElement>> _mapMethodElements = new();
 
-    public static CodeBuilderX CreateBuilderX(string nameSpace, string className, ICodeXProvider? provider) => new CodeBuilderX(nameSpace, className, provider);
+    public static CodeBuilderX CreateBuilderX(string nameSpace, string className, bool isAbstract, ICodeXProvider? provider) 
+        => new CodeBuilderX(nameSpace, className, isAbstract, provider);
 
     public bool AppendMethod(string methodName, string? argument, string? returnType)
     {
@@ -101,11 +102,12 @@ internal class CodeBuilderX : CodeBuilder
             namespace {_nameSpace};
 
             #nullable enable
-            partial class {BuildClassName()}
+            partial {BuildAbstract()}class {BuildClassName()}
             {'{'} 
             {BuildProperties()}
             {BuildCommands()}
             {BuildMethods()}
+            {BuildClassBody()}
             {'}'}
             #nullable disable
             """;
@@ -118,10 +120,11 @@ internal class CodeBuilderX : CodeBuilder
             namespace {_nameSpace};
 
             #nullable enable
-            partial class {BuildClassName()}
+            partial {BuildAbstract()}class {BuildClassName()}
             {'{'} 
             {BuildProperties()} 
             {BuildMethods()}
+            {BuildClassBody()}
             {'}'}
             #nullable disable
             """;
@@ -134,10 +137,11 @@ internal class CodeBuilderX : CodeBuilder
             namespace {_nameSpace};
 
             #nullable enable
-            partial class {BuildClassName()}
+            partial {BuildAbstract()}class {BuildClassName()}
             {'{'} 
             {BuildCommands()} 
             {BuildMethods()}
+            {BuildClassBody()}
             {'}'}
             #nullable disable
             """;
@@ -150,9 +154,10 @@ internal class CodeBuilderX : CodeBuilder
             namespace {_nameSpace};
 
             #nullable enable
-            partial class {BuildClassName()}
+            partial {BuildAbstract()}class {BuildClassName()}
             {'{'} 
             {BuildMethods()}
+            {BuildClassBody()}
             {'}'}
             #nullable disable
             """;
@@ -185,6 +190,11 @@ internal class CodeBuilderX : CodeBuilder
 
         StringBuilder builder = new();
         builder.AppendLine();
+
+        var appendString = _provider?.CreateMethodString(argument, returnType, methodName);
+        if (!string.IsNullOrWhiteSpace(appendString))
+            builder.AppendLine(appendString);
+
         foreach (var element in elements)
         {
             builder.Append(BuildMethodElement(element));

@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilderR.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilderXExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\CodeBuilderX.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\ICodeProvider.cs" />

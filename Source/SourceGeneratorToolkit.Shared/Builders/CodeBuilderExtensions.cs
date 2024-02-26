@@ -22,6 +22,12 @@ internal static class CodeBuilderExtensions
         return builder;
     }
 
+    public static CodeBuilder AppendInterfaceX<T>(this CodeBuilder builder)
+    {
+        var bRet = builder.AppendInterface(typeof(T).Name);
+        return builder;
+    }
+
     public static CodeBuilder AppendPropertyX(this CodeBuilder builder, string type, string fieldName, string propertyName)
     {
         var bRet = builder.AppendProperty(type, fieldName, propertyName);

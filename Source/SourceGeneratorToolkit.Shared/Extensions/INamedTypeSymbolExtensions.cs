@@ -41,4 +41,59 @@ internal static class INamedTypeSymbolExtensions
 
         return false;
     }
+
+    public static bool IsImplementedOf(this INamedTypeSymbol classSymbol, string interfaceType)
+    {
+        if (classSymbol is null || string.IsNullOrWhiteSpace(interfaceType))
+            return false;
+
+        var classSymbolInner = classSymbol;
+        for (; ; )
+        {
+            if (classSymbolInner is null)
+                break;
+
+            var interfaces = classSymbolInner.AllInterfaces;
+            if (interfaces.Length <= 0)
+                break;
+
+            foreach (var item in interfaces)
+            {
+                if (item.ToDisplayString() == interfaceType)
+                    return true;
+            }
+
+            classSymbolInner = classSymbol.BaseType;
+        }
+
+        return false;
+    }
+
+    public static bool IsImplementedOf<T>(this INamedTypeSymbol classSymbol)
+    {
+        var interfaceType = typeof(T).Name;
+        if (classSymbol is null || string.IsNullOrWhiteSpace(interfaceType))
+            return false;
+
+        var classSymbolInner = classSymbol;
+        for (; ; )
+        {
+            if (classSymbolInner is null)
+                break;
+
+            var interfaces = classSymbolInner.AllInterfaces;
+            if (interfaces.Length <= 0)
+                break;
+
+            foreach (var item in interfaces)
+            {
+                if (item.ToDisplayString() == interfaceType)
+                    return true;
+            }
+
+            classSymbolInner = classSymbol.BaseType;
+        }
+
+        return false;
+    }
 }

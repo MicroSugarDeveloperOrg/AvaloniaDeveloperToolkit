@@ -31,7 +31,7 @@ public class BindableCommandSourceGenerator : ISourceGenerator, ICodeProvider
         foreach (var mapMethod in map)
         {
             INamedTypeSymbol classSymbol = mapMethod.Key;
-            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, this);
+            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, classSymbol.IsAbstract, this);
             builder.AppendUseCommandSystemNameSpace();
 
             ImmutableArray<IMethodSymbol> methodSymbols = mapMethod.Value;
@@ -135,4 +135,8 @@ public class BindableCommandSourceGenerator : ISourceGenerator, ICodeProvider
         return code;
     }
 
+    string ICodeProvider.CreateClassBodyString()
+    {
+        return default!;
+    }
 }

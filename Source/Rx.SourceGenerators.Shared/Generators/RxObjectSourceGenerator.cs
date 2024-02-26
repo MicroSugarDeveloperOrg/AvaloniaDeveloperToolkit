@@ -40,7 +40,7 @@ public sealed class RxObjectSourceGenerator : ISourceGenerator
                                          classSymbol.BaseType?.Name));
             }
 
-            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, default!);
+            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, classSymbol.IsAbstract, default!);
             builder.AppendUsePropertySystemNameSpace();
             builder.AppendBaseType(__RxObject__);
             context.AddSource($"{classSymbol.Name}_{__RxObject__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));
