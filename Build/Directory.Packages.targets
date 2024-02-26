@@ -1,7 +1,7 @@
 ﻿<Project>
 	<PropertyGroup>
 		<!--Package-->
-		<DeveloperToolkitVersion>0.0.1</DeveloperToolkitVersion>
+		<DeveloperToolkitVersion>0.0.2</DeveloperToolkitVersion>
 		<DeveloperToolkitPackageOutputPath>$(RepositoryDirectory)nuget\</DeveloperToolkitPackageOutputPath>
 		<IncludeBuildOutput>false</IncludeBuildOutput><!--this is the setting for analyzer project-->
 		<Authors>MicroSugar</Authors>
