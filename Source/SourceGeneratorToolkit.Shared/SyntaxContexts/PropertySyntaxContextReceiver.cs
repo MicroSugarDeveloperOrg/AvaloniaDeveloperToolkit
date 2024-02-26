@@ -1,5 +1,9 @@
 ﻿namespace SourceGeneratorToolkit.SyntaxContexts;
 
+public record AttributeForProperty(INamedTypeSymbol Symbol, string AttributeString)
+{ }
+
+
 internal sealed class PropertySyntaxContextReceiver : ISyntaxContextReceiver
 {
     public PropertySyntaxContextReceiver(string propertyAttributeString)
@@ -8,6 +12,7 @@ internal sealed class PropertySyntaxContextReceiver : ISyntaxContextReceiver
     }
 
     Dictionary<INamedTypeSymbol, List<IFieldSymbol>> _mapFields = [];
+    Dictionary<IFieldSymbol, List<AttributeForProperty>> _mapPropertyAttributes = [];
 
     public string PropertyAttributeString { get; init; }
 
@@ -21,6 +26,33 @@ internal sealed class PropertySyntaxContextReceiver : ISyntaxContextReceiver
                 if (symbol is not IFieldSymbol fieldSymbol)
                     continue;
 
+                _mapPropertyAttributes.TryGetValue(fieldSymbol, out var attributesProperty);
+                if (attributesProperty is null)
+                {
+                    attributesProperty = [];
+                    _mapPropertyAttributes[fieldSymbol] = attributesProperty;
+                }
+
+                foreach (var attributeListSyntax in fieldDeclarationSyntax.AttributeLists)
+                {
+                    if (attributeListSyntax is null) continue;
+                    if (attributeListSyntax.Attributes.Count <= 0) continue;
+
+                    if (attributeListSyntax.Target?.Identifier.RawKind != (int)SyntaxKind.PropertyKeyword) continue;
+
+                    foreach (var attributeSyntax in attributeListSyntax.Attributes)
+                    {
+                        if (attributeSyntax is null) continue;
+                        var namedTypeSymbol = context.SemanticModel.GetTypeInfo(attributeSyntax).Type as INamedTypeSymbol;
+                        if (namedTypeSymbol is null) continue;
+
+                        var asString = attributeSyntax.ToString();
+
+                        attributesProperty.Add(new AttributeForProperty(namedTypeSymbol, asString));
+                    }
+                }
+
+                var attributes = fieldSymbol.GetAttributes();
                 if (fieldSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == PropertyAttributeString))
                 {
                     var type = fieldSymbol.ContainingType;
@@ -47,6 +79,15 @@ internal sealed class PropertySyntaxContextReceiver : ISyntaxContextReceiver
         var returnMap = map.ToImmutableDictionary(default);
         map.Clear();
         return returnMap;
+    }
+
+    public ImmutableArray<AttributeForProperty>? GetPropertyAttributes(IFieldSymbol symbol)
+    {
+        _mapPropertyAttributes.TryGetValue(symbol, out var attributes);
+        if (attributes is null)
+            return default;
+
+        return attributes.ToImmutableArray();
     }
 
     public bool Clear()

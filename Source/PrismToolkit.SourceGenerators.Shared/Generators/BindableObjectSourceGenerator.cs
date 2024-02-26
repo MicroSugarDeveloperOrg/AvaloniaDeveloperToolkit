@@ -39,7 +39,7 @@ public class BindableObjectSourceGenerator : ISourceGenerator
                                              classSymbol.BaseType?.Name));
             }
 
-            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, default!);
+            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, classSymbol.IsAbstract, default!);
             builder.AppendUsePropertySystemNameSpace();
             builder.AppendBaseType(__BindableObject__);
             context.AddSource($"{classSymbol.Name}_{__BindableObject__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));

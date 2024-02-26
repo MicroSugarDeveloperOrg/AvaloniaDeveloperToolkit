@@ -1,5 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Avalonia.Sample.ViewModels;
 
@@ -11,6 +13,8 @@ public partial class MainViewModel : TestUserControlViewModel
         
     }
 
+    [property: Column("id")]
+    [property: Key]
     [BindableProperty]
     string _greeting = "\"Welcome to Avalonia!\"";
 

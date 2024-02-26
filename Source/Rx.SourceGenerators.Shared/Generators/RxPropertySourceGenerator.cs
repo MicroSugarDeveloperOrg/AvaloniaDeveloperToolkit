@@ -33,7 +33,7 @@ public sealed class RxPropertySourceGenerator : ISourceGenerator, ICodeProvider
             if (classSymbol is null || fieldSymbols.Length <= 0)
                 continue;
 
-            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, this);
+            using CodeBuilder builder = CodeBuilder.CreateBuilder(classSymbol.ContainingNamespace.ToDisplayString(), classSymbol.Name, classSymbol.IsAbstract, this);
             builder.AppendUsePropertySystemNameSpace();
 
             foreach (var fieldSymbol in fieldSymbols)
@@ -49,6 +49,19 @@ public sealed class RxPropertySourceGenerator : ISourceGenerator, ICodeProvider
                 }
 
                 builder.AppendProperty(fieldSymbol.Type.ToDisplayString(), fieldSymbol.Name, propertyName);
+
+                var propertyAttributes = syntaxContextReceiver.GetPropertyAttributes(fieldSymbol);
+                if (propertyAttributes is null)
+                    continue;
+
+                foreach (var propertyAttribute in propertyAttributes)
+                {
+                    if (string.IsNullOrWhiteSpace(propertyAttribute.AttributeString)) continue;
+                    if (propertyAttribute.Symbol is null) continue;
+
+                    builder.AppendUseNameSpace(propertyAttribute.Symbol.ContainingNamespace.ToDisplayString());
+                    builder.AppendPropertyAttribute(propertyName, propertyAttribute.AttributeString);
+                }
             }
 
             context.AddSource($"{classSymbol.Name}_{__RxProperty__}.{__GeneratorCSharpFileExtension__}", SourceText.From(builder.Build()!, Encoding.UTF8));
@@ -64,5 +77,10 @@ public sealed class RxPropertySourceGenerator : ISourceGenerator, ICodeProvider
     string ICodeProvider.CreateCommandString(string? argumentType, string? returnType, string methodName, string? canMethodName)
     {
         throw new NotImplementedException();
+    }
+
+    string ICodeProvider.CreateClassBodyString()
+    {
+        return default!;
     }
 }

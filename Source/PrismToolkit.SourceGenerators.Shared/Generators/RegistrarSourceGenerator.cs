@@ -79,7 +79,7 @@ public class RegistrarSourceGenerator : ISourceGenerator, ICodeXProvider
                 return;
             }
 
-            using CodeBuilderX builder = CodeBuilderX.CreateBuilderX(registrarClass.ContainingNamespace.ToDisplayString(), registrarClass.Name, this);
+            using CodeBuilderX builder = CodeBuilderX.CreateBuilderX(registrarClass.ContainingNamespace.ToDisplayString(), registrarClass.Name, registrarClass.IsAbstract, this);
             builder.AppendUseIocSystemNameSpace();
             builder.AppendMethod(registrarMethod.Name, registrarMethod.CreateParameter(), registrarMethod.ReturnType.ToDisplayString());
 
@@ -193,5 +193,15 @@ public class RegistrarSourceGenerator : ISourceGenerator, ICodeXProvider
     string ICodeProvider.CreateCommandString(string? argumentType, string? returnType, string methodName, string? canMethodName)
     {
         throw new NotImplementedException();
+    }
+
+    string ICodeXProvider.CreateMethodString(string? argumentType, string? returnType, string methodName)
+    {
+        return default!;
+    }
+
+    string ICodeProvider.CreateClassBodyString()
+    {
+        return default!;
     }
 }

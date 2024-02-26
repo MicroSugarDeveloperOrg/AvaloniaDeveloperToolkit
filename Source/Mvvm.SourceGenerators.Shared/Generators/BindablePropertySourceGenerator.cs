@@ -1,12 +1,12 @@
-﻿using Prism.SourceGenerators.Builder;
+﻿using Mvvm.SourceGenerators.Builder;
 using SourceGeneratorToolkit.Builders;
 using SourceGeneratorToolkit.Diagnostics;
 using SourceGeneratorToolkit.Extensions;
 using SourceGeneratorToolkit.SyntaxContexts;
-using static Prism.SourceGenerators.Helpers.CodeHelpers;
+using static Mvvm.SourceGenerators.Helpers.CodeHelpers;
 using static SourceGeneratorToolkit.Helpers.CommonHelpers;
 
-namespace Prism.SourceGenerators.Generators;
+namespace Mvvm.SourceGenerators.Generators;
 
 [Generator(LanguageNames.CSharp)]
 public class BindablePropertySourceGenerator : ISourceGenerator, ICodeProvider

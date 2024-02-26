@@ -2,27 +2,31 @@
 
 internal class CodeBuilder : IDisposable
 {
-    protected CodeBuilder(string nameSpace, string className, ICodeProvider? provider)
+    protected CodeBuilder(string nameSpace, string className, bool isAbstract, ICodeProvider? provider)
     {
         _className = className;
         _nameSpace = nameSpace;
-
+        _isAbstract= isAbstract;
         _provider = provider;
     }
 
     ICodeProvider? _provider;
 
-    protected string _className;
-    protected string _nameSpace;
+    protected readonly string _nameSpace;
+    protected readonly string _className;
+    protected readonly bool _isAbstract;
+
     protected string? _baseTypeName;
     protected string _commandString = string.Empty;
     protected string _raisePropertyString = string.Empty;
     protected List<string> _namespaces = [];
     protected List<string> _interfaceNames = [];
     protected Dictionary<string, (string type, string field)> _mapPropertyNames = [];
+    protected Dictionary<string, List<string>> _mapPropertyAttributes = [];
     protected Dictionary<string, (string? argType, string? returnType, string? can)> _mapCommandNames = [];
 
-    public static CodeBuilder CreateBuilder(string nameSpace, string className,ICodeProvider? provider) => new CodeBuilder(nameSpace, className, provider);
+    public static CodeBuilder CreateBuilder(string nameSpace, string className, bool isAbstract, ICodeProvider? provider) 
+        => new CodeBuilder(nameSpace, className, isAbstract, provider);
 
     public string CommandString
     {
@@ -69,6 +73,21 @@ internal class CodeBuilder : IDisposable
         return true;
     }
 
+    public bool AppendPropertyAttribute(string propertyName, string attributeDescription)
+    {
+        if (string.IsNullOrWhiteSpace(propertyName) || string.IsNullOrWhiteSpace(attributeDescription))
+            return false;
+
+        _mapPropertyAttributes.TryGetValue(propertyName, out var attributes);
+        if (attributes is null)
+        {
+            attributes = [];
+            _mapPropertyAttributes[propertyName] = attributes;
+        }
+        attributes.Add(attributeDescription);
+        return true;
+    }
+
     public bool AppendCommand(string? argumentType, string? returnType, string methodName, string? canMethodName)
     {
         if (_mapCommandNames.ContainsKey(methodName))
@@ -90,10 +109,11 @@ internal class CodeBuilder : IDisposable
             namespace {_nameSpace};
 
             #nullable enable
-            partial class {BuildClassName()}
+            partial {BuildAbstract()}class {BuildClassName()}
             {'{'} 
             {BuildProperties()}
             {BuildCommands()}
+            {BuildClassBody()}
             {'}'}
             #nullable disable
             """;
@@ -106,9 +126,10 @@ internal class CodeBuilder : IDisposable
             namespace {_nameSpace};
 
             #nullable enable
-            partial class {BuildClassName()}
+            partial {BuildAbstract()}class {BuildClassName()}
             {'{'} 
             {BuildProperties()} 
+            {BuildClassBody()}
             {'}'}
             #nullable disable
             """;
@@ -121,9 +142,10 @@ internal class CodeBuilder : IDisposable
             namespace {_nameSpace};
 
             #nullable enable
-            partial class {BuildClassName()}
+            partial {BuildAbstract()}class {BuildClassName()}
             {'{'} 
             {BuildCommands()} 
+            {BuildClassBody()}
             {'}'}
             #nullable disable
             """;
@@ -134,9 +156,9 @@ internal class CodeBuilder : IDisposable
             namespace {_nameSpace};
 
             #nullable enable
-            partial class {BuildClassName()}
+            partial {BuildAbstract()}class {BuildClassName()}
             {'{'} 
-
+            {BuildClassBody()}
             {'}'}
             #nullable disable
             """;
@@ -168,7 +190,27 @@ internal class CodeBuilder : IDisposable
         return builder.ToString();
     }
 
-    protected string BuildClassName() => string.IsNullOrWhiteSpace(_baseTypeName) ? _className : $"{_className} : {_baseTypeName}";
+    protected string BuildAbstract()
+    {
+        return _isAbstract ? "abstract " : "";
+    }
+
+    protected string BuildClassName()
+    {
+        bool isBaseType = !string.IsNullOrWhiteSpace(_baseTypeName);
+        var classType = isBaseType ? $"{_className} : {_baseTypeName}" : _className;
+
+        var interfaceString = string.Join(", ", _interfaceNames);
+        if (!string.IsNullOrWhiteSpace(interfaceString))
+        {
+            if (isBaseType)
+                classType = $"{classType},{interfaceString}";
+            else
+                classType = $"{classType} : {interfaceString}";
+        }
+
+        return classType;
+    }
 
     protected string BuildProperties()
     {
@@ -190,6 +232,7 @@ internal class CodeBuilder : IDisposable
         var raisePropertyString = _provider?.GetRaisePropertyString(fieldName, propertyName);
         var code =
             $"""
+                {BuildPropertyAttributes(propertyName)}
                 public {type} {propertyName}
                 {'{'}
                     get => {fieldName};
@@ -214,6 +257,23 @@ internal class CodeBuilder : IDisposable
             """;
 
         return code;
+    }
+
+    protected string? BuildPropertyAttributes(string propertyName)
+    {
+        _mapPropertyAttributes.TryGetValue(propertyName, out var attributes);
+        if (attributes is null || attributes.Count <= 0)
+            return default;
+
+        StringBuilder builder = new();
+
+        foreach (var item in attributes)
+        {
+            builder.AppendLine();
+            builder.Append($"    [{item}]");
+        }
+        //builder.AppendLine();
+        return builder.ToString();
     }
 
     protected string BuildCommands()
@@ -244,6 +304,11 @@ internal class CodeBuilder : IDisposable
             return default;
 
         return _provider?.CreateCommandString(argumentType, returnType, methodName, canMethodName);
+    }
+
+    protected string? BuildClassBody()
+    {
+        return _provider?.CreateClassBodyString();
     }
 
     public void Dispose()

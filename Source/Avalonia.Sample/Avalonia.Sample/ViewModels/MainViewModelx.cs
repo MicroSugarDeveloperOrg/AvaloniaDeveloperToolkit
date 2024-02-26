@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using System.ComponentModel.DataAnnotations;
 
 namespace Avalonia.Sample.ViewModels;
 
@@ -10,6 +11,7 @@ internal partial class MainViewModelx
         //TestCommand
     }
 
+    [property: Key]
     [RxProperty]
     string? _title;
 

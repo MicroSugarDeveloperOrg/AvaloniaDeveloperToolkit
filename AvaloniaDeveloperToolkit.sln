@@ -49,6 +49,12 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PrismToolkit.SourceGenerato
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrismToolkit.SourceGenerators", "Source\PrismToolkit.SourceGenerators\PrismToolkit.SourceGenerators.csproj", "{B7991B53-1426-4971-B2B6-82B7FA0E15CD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mvvm.SourceGenerators", "Source\Mvvm.SourceGenerators\Mvvm.SourceGenerators.csproj", "{A709A944-2610-45FD-B8AD-F1B2338D63F9}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Mvvm.SourceGenerators.Shared", "Source\Mvvm.SourceGenerators.Shared\Mvvm.SourceGenerators.Shared.shproj", "{988BC1EC-FF74-4ED3-97D2-6A0DA88B10C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSugar.Mvvm", "Source\MicroSugar.Mvvm\MicroSugar.Mvvm.csproj", "{A274779B-4175-4AD7-9135-01DBADE8033B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +97,14 @@ Global
 		{B7991B53-1426-4971-B2B6-82B7FA0E15CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7991B53-1426-4971-B2B6-82B7FA0E15CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7991B53-1426-4971-B2B6-82B7FA0E15CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A709A944-2610-45FD-B8AD-F1B2338D63F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A709A944-2610-45FD-B8AD-F1B2338D63F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A709A944-2610-45FD-B8AD-F1B2338D63F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A709A944-2610-45FD-B8AD-F1B2338D63F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A274779B-4175-4AD7-9135-01DBADE8033B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A274779B-4175-4AD7-9135-01DBADE8033B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A274779B-4175-4AD7-9135-01DBADE8033B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A274779B-4175-4AD7-9135-01DBADE8033B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,6 +124,9 @@ Global
 		Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems*{3ee726e1-514a-4da2-8dde-6cc7d2af507e}*SharedItemsImports = 5
 		Source\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems*{3ee726e1-514a-4da2-8dde-6cc7d2af507e}*SharedItemsImports = 5
 		Source\PrismToolkit.SourceGenerators.Shared\PrismToolkit.SourceGenerators.Shared.projitems*{737f7c0a-e6f9-4c91-a703-4281b048a1a4}*SharedItemsImports = 13
+		Source\Mvvm.SourceGenerators.Shared\Mvvm.SourceGenerators.Shared.projitems*{988bc1ec-ff74-4ed3-97d2-6a0da88b10c6}*SharedItemsImports = 13
+		Source\Mvvm.SourceGenerators.Shared\Mvvm.SourceGenerators.Shared.projitems*{a709a944-2610-45fd-b8ad-f1b2338d63f9}*SharedItemsImports = 5
+		Source\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems*{a709a944-2610-45fd-b8ad-f1b2338d63f9}*SharedItemsImports = 5
 		Source\PrismToolkit.SourceGenerators.Shared\PrismToolkit.SourceGenerators.Shared.projitems*{b7991b53-1426-4971-b2b6-82b7fa0e15cd}*SharedItemsImports = 5
 		Source\SourceGeneratorToolkit.Shared\SourceGeneratorToolkit.Shared.projitems*{b7991b53-1426-4971-b2b6-82b7fa0e15cd}*SharedItemsImports = 5
 		Source\Rx.SourceGenerators.Shared\Rx.SourceGenerators.Shared.projitems*{dd89585d-923d-4c24-9a45-80e77a0a07f4}*SharedItemsImports = 13

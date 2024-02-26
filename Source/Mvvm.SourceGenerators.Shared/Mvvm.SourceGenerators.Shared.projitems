@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>988bc1ec-ff74-4ed3-97d2-6a0da88b10c6</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Mvvm.SourceGenerators</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\AutoPropertyAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\NotifyPropertyChangedAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builder\CodeBuilderExtensions.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\AutoPropertyAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\BindableCommandSourceGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\BindablePropertySourceGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generators\NotifyPropertyChangedSourceGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CodeHelpers.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EmbeddedResources\NotifyPropertyChangedAttribute.cs" />
+  </ItemGroup>
+</Project>
